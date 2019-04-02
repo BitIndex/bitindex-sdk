@@ -20,20 +20,40 @@ npm install bitindex-sdk --save
 var bitindex = require('bitindex-sdk');
 ```
 
+##  What's Included in this SDK
+
 ### Insight API
 A Bitcoin blockchain REST service compatible with [Bitcore Node](https://github.com/bitpay/bitcore-node).
 
 BitIndex is [Bitcore Insight-API](https://github.com/bitpay/insight-api/blob/45ebf7a152c1abfd179bf1b0d32734a2bd36e105/README.md) compatible (Websockets and Webhooks coming soon!)
 Use BitIndex to power your Bitcoin (SV) applications that rely on the Insight API payload formats.
 
+
+### BitIndex API
+
+todo...
+
+
+### BitIndex Admin API
+
+Manage your BitIndex account with the Admin API.
+
+
 ## Getting Started
-The API endpoints are available at: `https://api.bitindex.network/insight-api/`
+The API endpoints:
+
+- Insight API
+    - https://api.bitindex.network/insight-api
+- BitIndex API:
+    - https://api.bitindex.network/api/v2
+- BitIndex Admin API:
+    - https://api.bitindex.network/admin/api/v1
 
 ## Prerequisites
 
 - Get started with your free API key at [BitIndex](https://bitindex.network)
 
-## API HTTP Endpoints
+## Insight API HTTP Endpoints
 
 ### Raw Block: /insight-api/rawblock/<blockHash> (Apiary+test+thisdoc)
 
@@ -51,7 +71,7 @@ Response format:
 ```
 
 **BitIndex SDK**
-```javascript 
+```javascript
 var result = await bitindex.insight.rawblock('00000000000000000a076c169ae01a9854fdc418867299f39e536e92014652e2');
 /*
     {
@@ -261,7 +281,7 @@ Response format:
 
 ```javascript
  var result = await bitindex.insight.tx('83b1345f02f9fb331ec21e0060f7aebda3b700ec2a3b128be31bbc2deaad4d76');
- 
+
  /*
     {
         success: true,
@@ -269,9 +289,9 @@ Response format:
             // JSON transaction data for normal or coinbase transaction
         }
     }
- 
+
  */
- 
+
 ```
 
 ### Transaction (Raw) (Apiary+Test+thisdoc)
@@ -744,6 +764,287 @@ Example response:
 }
 ```
 
+## Webhooks - Add address to monitor: PUT /api/v2/webhooks/main/addrs
+
+Add addresseses to be monitored for webhooks.
+
+**HTTP Request**
+Request Format:
+`PUT https://localhost:3000/api/v2/webhooks/main/addrs`
+Post body:
+```
+[
+    {
+        addr: "12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX"
+    },
+    {
+        addr: "12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX",
+        tags: "tag1,tag2"
+    },
+    {
+        addr: "xpub1234..."
+    }
+]
+```
+
+Response Format:
+```javascript
+{
+    success: true,
+    message: 'Error message on failure'
+}
+
+```
+
+**BitIndex SDK**
+
+```javascript
+
+var result = await bitindex.webhooks.addAddrsMonitored(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', 'xpub123..']);
+/*
+{
+   success: true,
+   message: "Error message on failure"
+}
+*/
+
+```
+
+## Webhooks - Remove address from monitoring: DELETE /api/v2/webhooks/main/addrs
+
+Delete addresseses from being monitored for webhooks.
+
+**HTTP Request**
+Request Format:
+`DELETE https://localhost:3000/api/v2/webhooks/main/addrs`
+Post body:
+```
+[
+    "12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX",
+    "xpub1234..."
+]
+```
+
+Response Format:
+```javascript
+{
+    success: true,
+    message: 'Error message on failure'
+}
+
+```
+
+**BitIndex SDK**
+
+```javascript
+
+var result = await bitindex.webhooks.removeAddrsMonitored(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', 'xpub123..']);
+/*
+{
+   success: true,
+   message: "Error message on failure"
+}
+*/
+```
+
+## Webhooks - List addresses being monitored: GET /api/v2/webhooks/main/addrs?from=0&to=100
+
+Get addresseses that are being monitored for webhooks.
+
+**HTTP Request**
+Request Format:
+`GET https://localhost:3000/api/v2/webhooks/main/addrs`
+
+from: from offset (default 0)
+to: to offset (default 100)
+
+Response Format:
+```javascript
+{
+    success: true,
+    data: [
+        '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
+        'xpub123..'
+    ],
+    meta: {
+        from: 0,
+        to: 100,
+        totalItems: 200
+    }
+}
+```
+
+**BitIndex SDK**
+
+```javascript
+
+var result = await bitindex.webhooks.getAddrsMonitored(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', 'xpub123..']);
+/*
+{
+    success: true,
+    data: [
+        '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
+        'xpub123..'
+    ],
+    meta: {
+        from: 0,
+        to: 100,
+        totalItems: 200
+    }
+}
+*/
+
+```
+
+
+## Webhooks - Get webhook configuration: GET /api/v2/webhooks/main/config
+
+Get configuration for webhooks
+
+**HTTP Request**
+Request Format:
+`GET https://localhost:3000/api/v2/webhooks/main/config`
+
+Response Format:
+```javascript
+{
+    success: true,
+    data: {
+        name: 'main',
+        enabled: true,
+        callback_url: 'https://example.com/callbacks/bitindex',
+    }
+}
+```
+
+**BitIndex SDK**
+
+```javascript
+
+var result = await bitindex.webhooks.getConfig(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', 'xpub123..']);
+/*
+{
+    success: true,
+    data: {
+        name: 'main',
+        enabled: true,
+        callback_url: 'https://example.com/callbacks/bitindex',
+    }
+}
+*/
+
+```
+
+## Webhooks - Update webhook callback\_url property: PUT /api/v2/webhooks/main/config/callback_url
+
+Update callback_url property
+
+**HTTP Request**
+Request Format:
+`PUT https://localhost:3000/api/v2/webhooks/main/config/callback_url`
+
+Body:
+```javascript
+{
+   "callback_url": "https://www.example.com/callback"
+}
+```
+
+Response Format:
+```javascript
+{
+    success: true,
+    message: "error message"
+}
+```
+
+**BitIndex SDK**
+
+```javascript
+
+var result = await bitindex.webhooks.setConfig('callback_url', 'https://www.example.com/callback');
+/*
+{
+    success: true,
+    message: "error message"
+}
+*/
+
+```
+
+## Webhooks - Update webhook enabled property: PUT /api/v2/webhooks/main/config/enabled
+
+Update enabled property
+
+**HTTP Request**
+Request Format:
+`PUT https://localhost:3000/api/v2/webhooks/main/config/enabled`
+
+Body:
+```javascript
+{
+   "enabled": true
+}
+```
+
+Response Format:
+```javascript
+{
+    success: true,
+    message: "error message"
+}
+```
+
+**BitIndex SDK**
+
+```javascript
+
+var result = await bitindex.webhooks.setConfig('enabled', false');
+/*
+{
+    success: true,
+    message: "error message"
+}
+*/
+
+```
+
+## Webhooks - Get delivery logs: GET /api/v2/webhooks/main/logs?from=0&to=100
+
+Get delivery logs
+
+**HTTP Request**
+Request Format:
+`GET https://localhost:3000/api/v2/webhooks/main/logs`
+
+Response Format:
+```javascript
+{
+    success: true,
+    data: [
+        {
+
+
+        }
+    ]
+}
+```
+
+**BitIndex SDK**
+
+```javascript
+
+var result = await bitindex.webhooks.setConfig('enabled', false');
+/*
+{
+    success: true,
+    message: "error message"
+}
+*/
+
+```
+
+
 
 ## Build and Test
 
@@ -756,9 +1057,9 @@ npm test
 -----------
 
 
- ## Any questions?
+ ## Any questions or ideas?
 
- We love to hear from you!
+ We would love to hear from you!
  https://www.BitIndex.network
  https://twitter.com/BitIndexNetwork
 
