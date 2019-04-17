@@ -3,7 +3,8 @@ var expect = require('chai').expect;
 var index = require('../dist/index.js');
 
 const options = {
-    insight_api: 'http://localhost:3000'
+    // insight_api: 'http://localhost:3000',
+    insight_api: 'https://api.bitindex.network'
 };
 
 describe('insight GET /api/tx/:txid normal transaction test', () => {
@@ -216,7 +217,7 @@ describe('insight GET /api/rawblock/:blockhash test', () => {
         var result = await index.instance().insight.rawblock('inv');
         expect(result).to.eql({
             success: false,
-            message: "Request failed with status code 404"
+            message: "Request failed with status code 500"
         });
     });
     it('should succeed with blockhash', async () => {
@@ -289,7 +290,7 @@ describe('insight GET /api/status?q=getDifficulty test', () => {
     });
 });
 
-describe('insight BET /api/status test', () => {
+describe('insight GET /api/status test', () => {
     it('should succeed with default status', async () => {
         var result = await index.instance(options).insight.status();
         expect(result.success).to.eql(true);
@@ -299,7 +300,7 @@ describe('insight BET /api/status test', () => {
         expect(result.data).to.eql({
             info:
                 {
-                    version: 100010000,
+                    version: 100010100,
                     protocolversion: 70015,
                     // blocks: 576014,
                     timeoffset: 0,
@@ -308,7 +309,7 @@ describe('insight BET /api/status test', () => {
                     // difficulty: 97359826681.75484,
                     testnet: false,
                     relayfee: 0.00001,
-                    errors: '',
+                    errors: 'This is a pre-release test build - use at your own risk - do not use for mining or merchant applications',
                     network: 'livenet'
                 }
             }
@@ -330,12 +331,12 @@ describe('insight /api/tx/send test', () => {
 
 describe('insight POST /api/addrs/txs test', () => {
     it('should succeed with default status', async () => {
-        var result = await index.instance(options).insight.addrsTxs(
+        var result = await index.instance(options).insight.getAddressesTxs(
             '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX'
         );
         expect(result.success).to.eql(true);
         for (let i = 0; i< result.data.items.length; i++) {
-            delete result.data.items[i].confirmations;  
+            delete result.data.items[i].confirmations;
         }
         expect(result.data).to.eql(
             {
@@ -566,7 +567,7 @@ describe('insight POST /api/addrs/txs test', () => {
              }
         );
 
-        var result = await index.instance(options).insight.addrsTxs(
+        var result = await index.instance(options).insight.getAddressesTxs(
             '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
             1,
             2,
@@ -821,7 +822,7 @@ describe('insight POST /api/addrs/txs test', () => {
 
 describe('insight GET /api/addr/:address/utxo test', () => {
     it('should fail with invalid address', async () => {
-        var result = await index.instance(options).insight.addrUtxo('address');
+        var result = await index.instance(options).insight.getAddressUtxos('address');
         expect(result.success).to.eql(false);
         expect(result).to.eql({
             success: false,
@@ -830,7 +831,7 @@ describe('insight GET /api/addr/:address/utxo test', () => {
     });
 
     it('should succeed with getting utxos', async () => {
-        var result = await index.instance(options).insight.addrUtxo('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
+        var result = await index.instance(options).insight.getAddressUtxos('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
         expect(result.success).to.eql(true);
         delete result.data[0].confirmations;
         delete result.data[1].confirmations;
@@ -862,7 +863,7 @@ describe('insight GET /api/addr/:address/utxo test', () => {
                 }
             ]
         });
-        var result = await index.instance(options).insight.addrUtxo(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD']);
+        var result = await index.instance(options).insight.getAddressUtxos(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD']);
         expect(result.success).to.eql(true);
         delete result.data[0].confirmations;
         delete result.data[1].confirmations;
@@ -911,7 +912,7 @@ describe('insight GET /api/addr/:address/utxo test', () => {
 
 describe('insight POST /api/addrs/utxo test', () => {
     it('should fail with invalid address', async () => {
-        var result = await index.instance(options).insight.addrsUtxo('address');
+        var result = await index.instance(options).insight.getAddressesUtxos('address');
         expect(result.success).to.eql(false);
         expect(result).to.eql({
             success: false,
@@ -920,7 +921,7 @@ describe('insight POST /api/addrs/utxo test', () => {
     });
 
     it('should succeed with getting utxos', async () => {
-        var result = await index.instance(options).insight.addrsUtxo(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD']);
+        var result = await index.instance(options).insight.getAddressesUtxos(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD']);
         expect(result.success).to.eql(true);
         delete result.data[0].confirmations;
         delete result.data[1].confirmations;
@@ -966,7 +967,7 @@ describe('insight POST /api/addrs/utxo test', () => {
     });
 
     /**
-      
+
     describe('insight GET /api/addr/txs?address=:address test', () => {
         it('should fail with invalid address', async () => {
             var result = await index.instance(options).insight.addrTxs('address');
@@ -976,7 +977,7 @@ describe('insight POST /api/addrs/utxo test', () => {
                 message: 'Request failed with status code 500'
             });
         });
-    
+
         it('should succeed with getting utxos', async () => {
             var result = await index.instance(options).insight.addrTxs('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
             expect(result.success).to.eql(true);

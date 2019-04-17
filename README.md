@@ -5,8 +5,6 @@ https://www.bitindex.network
 BitIndex is a Bitcoin (SV) blockchain API for developers and wallet providers.
 Get started with your free API key at [BitIndex](https://www.bitindex.network)
 
-# ALPHA TESTING -- PLEASE CHECK BACK IN A COUPLE OF WEEKS -- IN PROGRESS
-
 ## Installation and Usage
 
 **Installation**

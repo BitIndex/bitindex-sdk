@@ -1,4 +1,5 @@
 import { InsightClient } from './insight-client';
+import { CoreClient } from './core-client';
 
 export class InsightAPI {
   options = undefined;
@@ -54,22 +55,22 @@ export class InsightAPI {
     return insightClient.status(callback);
   }
 
-  addrUtxo(addr: any, fromIndex: number = 0, toIndex: number = 20, callback?: Function): Promise<any> {
+  getAddressUtxos(addr: any, fromIndex: number = 0, toIndex: number = 20, callback?: Function): Promise<any> {
     const insightClient = new InsightClient(this.options);
     return insightClient.addrsUtxo(addr, fromIndex, toIndex, callback);
   }
 
-  addrsUtxo(addrs: any[], fromIndex: number = 0, toIndex: number = 20, callback?: Function): Promise<any> {
+  getAddressesUtxos(addrs: any[], fromIndex: number = 0, toIndex: number = 20, callback?: Function): Promise<any> {
     const insightClient = new InsightClient(this.options);
     return insightClient.addrsUtxo(addrs, fromIndex, toIndex, callback);
   }
 
-  addrTxs(addr: any, fromIndex: number = 0, toIndex: number = 20, callback?: Function): Promise<any> {
+  getAddressTxs(addr: any, callback?: Function): Promise<any> {
     const insightClient = new InsightClient(this.options);
     return insightClient.addrTxs(addr, callback);
   }
 
-  addrsTxs(addrs: any, fromIndex: number = 0, toIndex: number = 20, noAsm: boolean = true, noScript: boolean = true, noSpent: boolean = true, callback?: Function): Promise<any> {
+  getAddressesTxs(addrs: any, fromIndex: number = 0, toIndex: number = 20, noAsm: boolean = true, noScript: boolean = true, noSpent: boolean = true, callback?: Function): Promise<any> {
     const insightClient = new InsightClient(this.options);
     return insightClient.addrsTxs(addrs, fromIndex, toIndex, noAsm, noScript, noSpent, callback);
   }
@@ -79,12 +80,18 @@ export class InsightAPI {
 export default class BitIndexSDK {
   options;
   insight;
+  core;
 
   constructor(options?: any) {
     if (options) {
       this.options = options;
     }
     this.insight = new InsightAPI(this.options);
+    this.core = new CoreClient(this.options);
+  }
+
+  getAddressUtxos(addrs: any, callback?: Function): Promise<any> {
+    return this.core.getAddressUtxos(addrs, callback);
   }
 }
 
