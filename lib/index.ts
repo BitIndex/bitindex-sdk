@@ -109,7 +109,7 @@ export function instance(options?: any): BitIndexSDK {
 
 try {
   if (window) {
-    window['bitindex'] = BitIndexSDK;
+    window['BitIndex'] = BitIndexSDK;
   }
 }
 catch (ex) {

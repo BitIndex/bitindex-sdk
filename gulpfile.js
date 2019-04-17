@@ -10,6 +10,34 @@ var buffer = require('vinyl-buffer');
 var paths = {
     pages: ['lib/examples/*.html']
 };
+var header = require('gulp-header');
+// using data from package.json
+var pkg = require('./package.json');
+var banner = ['/**',
+  ' * <%= pkg.name %> - <%= pkg.description %>',
+  ' * @version v<%= pkg.version %>',
+  ' * @link <%= pkg.homepage %>',
+  ' *',
+  ' * Copyright 2019 BitIndex (Qiwibee Inc.)',
+  ' *',
+  ' * Permission is hereby granted, free of charge, to any person obtaining a copy,',
+  ' * of this software and associated documentation files (the "Software"), to deal',
+  ' * in the Software without restriction, including without limitation the rights',
+  ' * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell',
+  ' * copies of the Software, and to permit persons to whom the Software is furnished',
+  ' * to do so, subject to the following conditions:',
+  ' *',
+  ' * The above copyright notice and this permission notice shall be included in all',
+  ' * copies or substantial portions of the Software.',
+  ' *',
+  ' * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,',
+  ' * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A',
+  ' * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT',
+  ' * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION',
+  ' * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE',
+  ' * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.',
+  ' */',
+  ''].join('\n');
 
 gulp.task("copy-html", function () {
   return gulp.src(paths.pages)
@@ -29,5 +57,6 @@ gulp.task("build", ['copy-html'], function () {
   .pipe(source('bundle.min.js'))
   .pipe(buffer())
   .pipe(uglify())
+  .pipe(header(banner, { pkg : pkg } ))
   .pipe(gulp.dest("dist"));
 });
