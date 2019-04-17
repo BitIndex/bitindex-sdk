@@ -4,24 +4,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>BitIndex Example</title>
-    <base href="/" />
+    <base href="/"/>
     <script src="/dist/bundle.min.js"></script>
-    <script
-        src="http://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-
     <script language="javascript">
-        $(document).ready(async (e) => {
-          var bitindex = new BitIndex();
-          var result = await bitindex.getAddressUtxos('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
-          console.log('result', result);
-          document.getElementById('results').innerHTML = JSON.stringify(result);
-        });
+      // On ready taken from https://stackoverflow.com/a/7053197
+      function r(f){/in/.test(document.readyState)?setTimeout(r,9,f):f()}
+      r(async () => {
+        // When content loaded in page on ready, then run this code....
+        var bitindex = new BitIndex();
+        var result = await bitindex.insight.getAddressUtxos('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
+        console.log('result', result);
+        document.getElementById('results').innerHTML = JSON.stringify(result);
+      });
     </script>
   </head>
   <body>
-    Query results:
-    <div id="results"></div>
+    <a href="https://www.bitindex.network">BitIndex</a>
+    <a href="https://www.github.com/BitIndex/bitindex-sdk">Github</a>
+    <p>
+      UTXO query result:
+    </p>
+    <div id="results" style="word-break: break-word"></div>
   </body>
 </html>
