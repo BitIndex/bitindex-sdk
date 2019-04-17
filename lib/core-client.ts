@@ -54,4 +54,19 @@ export class CoreClient {
             })
         });
     }
+
+    sendTx(rawtx: string, callback?: Function): Promise<any> {
+        return new Promise((resolve, reject) => {
+            axios.post(this.options.api + `/api/v2/tx/send`,
+                { rawtx },
+                {
+                    headers: { }
+                }
+            ).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, ex.response.data, callback)
+            })
+        });
+    }
 }

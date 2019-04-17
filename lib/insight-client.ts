@@ -42,10 +42,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
 
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
@@ -69,10 +66,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -94,10 +88,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -119,10 +110,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -144,10 +132,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -169,10 +154,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -189,10 +171,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -209,10 +188,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -229,10 +205,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -249,10 +222,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -269,10 +239,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -301,10 +268,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -321,10 +285,7 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
@@ -365,15 +326,27 @@ export class InsightClient {
                     headers: { }
                 }
             ).then((response) => {
-                this.callbackAndResolve(resolve, {
-                    success: true,
-                    data: response.data
-                }, callback);
+                this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
                     success: false,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
+            })
+        });
+    }
+
+    sendTx(rawtx: string, callback?: Function): Promise<any> {
+        return new Promise((resolve, reject) => {
+            axios.post(this.options.insight_api + `/api/tx/send`,
+                { rawtx },
+                {
+                    headers: { }
+                }
+            ).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, ex.response.data, callback)
             })
         });
     }

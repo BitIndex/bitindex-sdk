@@ -29,23 +29,21 @@ Use BitIndex to power your Bitcoin (SV) applications that rely on the Insight AP
 
 ### BitIndex API
 
-todo...
+API at https://www.bitindex.network/docs.html
 
 
-### BitIndex Admin API
+### BitIndex Admin API (Coming soon!)
 
-Manage your BitIndex account with the Admin API.
+Manage your BitIndex account with the Admin API. Not yet implemented.
 
 
 ## Getting Started
 The API endpoints:
 
 - Insight API
-    - https://api.bitindex.network/insight-api
+    - https://api.bitindex.network/api
 - BitIndex API:
     - https://api.bitindex.network/api/v2
-- BitIndex Admin API:
-    - https://api.bitindex.network/admin/api/v1
 
 ## Prerequisites
 
@@ -53,7 +51,7 @@ The API endpoints:
 
 ## Insight API HTTP Endpoints
 
-### Raw Block: /insight-api/rawblock/<blockHash> (Apiary+test+thisdoc)
+### Raw Block: /api/rawblock/<blockHash>
 
 **HTTP Request**
 Retrieve the raw hex of a block.
@@ -80,7 +78,7 @@ var result = await bitindex.insight.rawblock('00000000000000000a076c169ae01a9854
 */
 ```
 
-### Block: /insight-api/block/<blockhash> (Apiary+test+thisdoc)
+### Block: /api/block/<blockhash>
 
 Retrieve JSON encoded block.
 
@@ -151,7 +149,7 @@ var result = await bitindex.insight.block('00000000000000000a076c169ae01a9854fdc
 */
 ```
 
-### Block Index: /block-index/<height> (Apiary + test + thisdoc)
+### Block Index: /block-index/<height>
 Get block hash by height.
 
 **HTTP Request**
@@ -179,7 +177,7 @@ const result = await index.instance(options).insight.blockindex(575870);
 }
 ```
 
-### Transaction (JSON): /insight-api/tx/<txid> (Apiary+test+thisdoc)
+### Transaction (JSON): /api/tx/<txid>
 
 **HTTP Requeast**
 
@@ -292,8 +290,7 @@ Response format:
 
 ```
 
-### Transaction (Raw) (Apiary+Test+thisdoc)
-
+### Transaction (Raw)
 **HTTP Request**
 
 Request Format:
@@ -325,9 +322,9 @@ Response Format:
 
 Request format:
 ```
-  /insight-api/addr/[:addr][?noTxList=1][&from=&to=]
-  /insight-api/addr/mmvP3mTe53qxHdPqXEvdu8WdC7GfQ2vmx5?noTxList=1
-  /insight-api/addr/mmvP3mTe53qxHdPqXEvdu8WdC7GfQ2vmx5?from=1000&to=2000
+  /api/addr/[:addr][?noTxList=1][&from=&to=]
+  /api/addr/mmvP3mTe53qxHdPqXEvdu8WdC7GfQ2vmx5?noTxList=1
+  /api/addr/mmvP3mTe53qxHdPqXEvdu8WdC7GfQ2vmx5?from=1000&to=2000
 ```
 Response format:
 ```
@@ -351,22 +348,21 @@ Response format:
 }
 ```
 
-
 ### Address Properties  (Coming Soon!)
 ```
-  /insight-api/addr/[:addr]/balance
-  /insight-api/addr/[:addr]/totalReceived
-  /insight-api/addr/[:addr]/totalSent
-  /insight-api/addr/[:addr]/unconfirmedBalance
+  /api/addr/[:addr]/balance
+  /api/addr/[:addr]/totalReceived
+  /api/addr/[:addr]/totalSent
+  /api/addr/[:addr]/unconfirmedBalance
 ```
 The response contains the value in Satoshis.
 
-### Unspent Outputs: /insight-api/addr/:addr/utxo (Apiary + Test +thisdoc)
+### Unspent Outputs: /api/addr/:addr/utxo
 
 **HTTP Request**
 
 Request Format:
-`GET https://localhost:3000/api/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX/utxo`
+`GET /api/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX/utxo`
 
 Response Format:
 ```
@@ -433,12 +429,12 @@ Response Format:
 
 ```
 
-### Unspent Outputs for Multiple Addresses: GET /insight-api/addrs/:addr1,addr2,.../utxo (Apiary+test+thisdoc)
+### Unspent Outputs for Multiple Addresses: GET /api/addrs/:addr1,addr2,.../utxo
 
 **HTTP Request**
 
 Request Format:
-`GET https://localhost:3000/api/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX,1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD/utxo`
+`GET /api/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX,1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD/utxo`
 
 Response Format:
 ```
@@ -525,15 +521,14 @@ Response Format:
 
 ```
 
-
-### Unspent Outputs for Multiple Addresses: POST /insight-api/addrs/utxo (apiary+test+thisdoc)
+### Unspent Outputs for Multiple Addresses: POST /api/addrs/utxo
 
 Bulk operation for many addresses
 
 **HTTP Request**
 
 Request Format:
-`POST https://localhost:3000/api/addrs/utxo`
+`POST /api/addrs/utxo`
 Post body:
 ```
 {
@@ -628,25 +623,25 @@ Response Format:
 
 ### Transactions by Block  (Coming Soon!)
 ```
-  /insight-api/txs/?block=HASH
-  /insight-api/txs/?block=00000000fa6cf7367e50ad14eb0ca4737131f256fc4c5841fd3c3f140140e6b6
+  /api/txs/?block=HASH
+  /api/txs/?block=00000000fa6cf7367e50ad14eb0ca4737131f256fc4c5841fd3c3f140140e6b6
 ```
 ### Transactions by Address  (Coming Soon!)
 ```
-  /insight-api/txs/?address=ADDR
-  /insight-api/txs/?address=mmhmMNfBiZZ37g1tgg2t8DDbNoEdqKVxAL
+  /api/txs/?address=ADDR
+  /api/txs/?address=mmhmMNfBiZZ37g1tgg2t8DDbNoEdqKVxAL
 ```
 
 ### Transactions for Multiple Addresses  (Coming Soon!)
 GET method:
 ```
-  /insight-api/addrs/[:addrs]/txs[?from=&to=]
-  /insight-api/addrs/2NF2baYuJAkCKo5onjUKEPdARQkZ6SYyKd5,2NAre8sX2povnjy4aeiHKeEh97Qhn97tB1f/txs?from=0&to=20
+  /api/addrs/[:addrs]/txs[?from=&to=]
+  /api/addrs/2NF2baYuJAkCKo5onjUKEPdARQkZ6SYyKd5,2NAre8sX2povnjy4aeiHKeEh97Qhn97tB1f/txs?from=0&to=20
 ```
 
 POST method:
 ```
-  /insight-api/addrs/txs
+  /api/addrs/txs
 ```
 
 POST params:
@@ -714,7 +709,7 @@ POST response:
 
 ### Status of the Bitcoin Network
 ```
-  /insight-api/status?q=xxx
+  /api/status?q=xxx
 ```
 
 Where "xxx" can be:
@@ -768,7 +763,7 @@ Add addresseses to be monitored for webhooks.
 
 **HTTP Request**
 Request Format:
-`PUT https://localhost:3000/api/v2/webhooks/main/addrs`
+`PUT /api/v2/webhooks/main/addrs`
 Post body:
 ```
 [
@@ -794,19 +789,12 @@ Response Format:
 
 ```
 
-**BitIndex SDK**
+**BitIndex API**
 
-```javascript
 
-var result = await bitindex.webhooks.addAddrsMonitored(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', 'xpub123..']);
-/*
-{
-   success: true,
-   message: "Error message on failure"
-}
-*/
+todo...
 
-```
+
 
 ## Webhooks - Remove address from monitoring: DELETE /api/v2/webhooks/main/addrs
 
@@ -814,7 +802,7 @@ Delete addresseses from being monitored for webhooks.
 
 **HTTP Request**
 Request Format:
-`DELETE https://localhost:3000/api/v2/webhooks/main/addrs`
+`DELETE /api/v2/webhooks/main/addrs`
 Post body:
 ```
 [
@@ -833,215 +821,90 @@ Response Format:
 ```
 
 **BitIndex SDK**
+### Webhooks API
 
-```javascript
+##### PUT /api/v2/webhook_endpoints?api_key=YOUR_API_KEY
+Enable webhooks and specify the URL to receive callbacks at
 
-var result = await bitindex.webhooks.removeAddrsMonitored(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', 'xpub123..']);
-/*
-{
-   success: true,
-   message: "Error message on failure"
-}
-*/
+Request body (`application/json`)
 ```
-
-## Webhooks - List addresses being monitored: GET /api/v2/webhooks/main/addrs?from=0&to=100
-
-Get addresseses that are being monitored for webhooks.
-
-**HTTP Request**
-Request Format:
-`GET https://localhost:3000/api/v2/webhooks/main/addrs`
-
-from: from offset (default 0)
-to: to offset (default 100)
-
-Response Format:
-```javascript
 {
-    success: true,
-    data: [
-        '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
-        'xpub123..'
-    ],
-    meta: {
-        from: 0,
-        to: 100,
-        totalItems: 200
-    }
+    "url": "http://yourappdomain.com/path/callback",
+    "secret": "secret123key",
+    "enabled": true
 }
 ```
 
-**BitIndex SDK**
+##### GET /api/v2/webhook_endpoints?api_key=YOUR_API_KEY
+Get webhook settings.
 
-```javascript
-
-var result = await bitindex.webhooks.getAddrsMonitored(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', 'xpub123..']);
-/*
-{
-    success: true,
-    data: [
-        '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
-        'xpub123..'
-    ],
-    meta: {
-        from: 0,
-        to: 100,
-        totalItems: 200
-    }
-}
-*/
-
+Response body (`application/json`)
 ```
-
-
-## Webhooks - Get webhook configuration: GET /api/v2/webhooks/main/config
-
-Get configuration for webhooks
-
-**HTTP Request**
-Request Format:
-`GET https://localhost:3000/api/v2/webhooks/main/config`
-
-Response Format:
-```javascript
 {
-    success: true,
     data: {
-        name: 'main',
-        enabled: true,
-        callback_url: 'https://example.com/callbacks/bitindex',
+        "id": "9561c720-10bc-11e9-bb8c-9932d7d4e1a6",
+        "url": "http://yourappdomain.com/path/callback",
+        "secret": "secret123key",
+        "enabled": true
     }
 }
 ```
+localhost:3000/api/v2/monitored?api_key=key1
+##### PUT /api/v2/monitored?api_key=YOUR_API_KEY
+Add addresses and xpubs for monitoring to receive webhooks when payments are made.
 
-**BitIndex SDK**
-
-```javascript
-
-var result = await bitindex.webhooks.getConfig(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', 'xpub123..']);
-/*
-{
-    success: true,
-    data: {
-        name: 'main',
-        enabled: true,
-        callback_url: 'https://example.com/callbacks/bitindex',
-    }
-}
-*/
-
+Request body (`application/json`)
+```
+[
+  {
+    "addr": "xpub6CYu4dQVx3Ki3ooYqVdDH1md7hGJZSxCSRFEfKAmoowPRPcwmXRGqdrMcJh7jhTY2a2BT2nSX8AESPgQfhgnfUdcn8N9EwJkWEKBHHJV7fJ"
+  },
+  {
+    "addr": "1M6N389jhRi5DQgoQcNir2e2REpYeAYavD"
+  }
+]
 ```
 
-## Webhooks - Update webhook callback\_url property: PUT /api/v2/webhooks/main/config/callback_url
+##### GET /api/v2/monitored?api_key=YOUR_API_KEY
+Get all addresses and xpubs monitored.
 
-Update callback_url property
-
-**HTTP Request**
-Request Format:
-`PUT https://localhost:3000/api/v2/webhooks/main/config/callback_url`
-
-Body:
-```javascript
-{
-   "callback_url": "https://www.example.com/callback"
-}
+Response body (`application/json`)
 ```
-
-Response Format:
-```javascript
 {
-    success: true,
-    message: "error message"
-}
-```
-
-**BitIndex SDK**
-
-```javascript
-
-var result = await bitindex.webhooks.setConfig('callback_url', 'https://www.example.com/callback');
-/*
-{
-    success: true,
-    message: "error message"
-}
-*/
-
-```
-
-## Webhooks - Update webhook enabled property: PUT /api/v2/webhooks/main/config/enabled
-
-Update enabled property
-
-**HTTP Request**
-Request Format:
-`PUT https://localhost:3000/api/v2/webhooks/main/config/enabled`
-
-Body:
-```javascript
-{
-   "enabled": true
-}
-```
-
-Response Format:
-```javascript
-{
-    success: true,
-    message: "error message"
-}
-```
-
-**BitIndex SDK**
-
-```javascript
-
-var result = await bitindex.webhooks.setConfig('enabled', false');
-/*
-{
-    success: true,
-    message: "error message"
-}
-*/
-
-```
-
-## Webhooks - Get delivery logs: GET /api/v2/webhooks/main/logs?from=0&to=100
-
-Get delivery logs
-
-**HTTP Request**
-Request Format:
-`GET https://localhost:3000/api/v2/webhooks/main/logs`
-
-Response Format:
-```javascript
-{
-    success: true,
-    data: [
+    "data": [
         {
-
-
+            "addr": "xpub6CYu4dQVx3Ki3ooYqVdDH1md7hGJZSxCSRFEfKAmoowPRPcwmXRGqdrMcJh7jhTY2a2BT2nSX8AESPgQfhgnfUdcn8N9EwJkWEKBHHJV7fJ"
+        },
+        {
+            "addr": "1M6N389jhRi5DQgoQcNir2e2REpYeAYavD"
         }
     ]
-}
+]
 ```
 
-**BitIndex SDK**
 
-```javascript
+##### POST /webhook/callback (to your server)
+Callbacks for addresses are received at your configured URL.
 
-var result = await bitindex.webhooks.setConfig('enabled', false');
-/*
+Note: You can receive up to multiple callbacks in any order. Make sure to check the 'confirmations' parameter and always use the highest 'confirmations' your application has seen before.
+
+It is possible that old webhooks are in transit with a lower 'confirmations' than what you have received before.
+
+Note: You should be able to rely on payments of 3 confirmations. Always check with the > and < operators since it cannot be guaranteed that you will receive a webhook with exactly _3 confirmations_ (it could be 4, 5 or more).
+
+Request body (`application/json`)
+```
 {
-    success: true,
-    message: "error message"
+    txid: 'e9865ab744ef236f0f436455a439263a53d9708f5eca66625dccb85cf1ff5947',
+    address: '1M6N389jhRi5DQgoQcNir2e2REpYeAYavD',
+    xpub: 'xpub6CYu...',    // Xpub will be present if address is associated with an xpub
+    path: '1/0',            // Path is set if xpub is present
+    satoshis: 1273,
+    confirmations: 3,
+    vout: 0,
+    secret: "secret123key", // Set this secret key above and then compare in your code
 }
-*/
-
 ```
-
 
 
 ## Build and Test

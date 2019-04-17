@@ -24,7 +24,7 @@ describe('insight GET /api/tx/:txid normal transaction test', () => {
     });
     it('should succeed with txid', async () => {
         var result = await index.instance().insight.tx('369d78ee889e8ffd538c89a514539bff2211a254a89ed9643ed07e0fd3909026');
-        delete result.data.confirmations;
+        delete result.confirmations;
         const expected = {
             hex: '01000000018bae5e868e5b794a05dfd42aa5a2c6b31e2a8c5ec2c8bfee8e403a1b8dd79c62010000008a4730440220739027f85e42d75b4f117b654bae6ad41d7f2634cfa86308066f5e7247fb626c02207536c9b8f274ff37bb6849bb7ad7ba48514ca72f1b51afa5cf651a30209d0fc34141043cf0a503fd150ad112de4503f7dd17dcdba99e41cd7f8b52315fa1a4f9e499b9493fddcc15a594022f9734b8cf12a068d51328664192f351c3b618e52ae1f85fffffffff020000000000000000416a2231394878696756345179427633744870515663554551797131707a5a56646f41757401620d746578742f6d61726b646f776e055554462d3801610474616731739a0a00000000001976a9149467df677dc153a88243465d09ca5fe8f7ba8cf988ac00000000',
             txid: '369d78ee889e8ffd538c89a514539bff2211a254a89ed9643ed07e0fd3909026',
@@ -73,17 +73,14 @@ describe('insight GET /api/tx/:txid normal transaction test', () => {
            time: 1551826279,
            blocktime: 1551826279
         };
-        expect(result).to.eql({
-            success: true,
-            data: expected
-        });
+        expect(result).to.eql(expected);
     });
 })
 
 describe('insight GET /api/tx/:txid coinbase transaction test', () => {
     it('should succeed with txid', async () => {
         var result = await index.instance().insight.tx('83b1345f02f9fb331ec21e0060f7aebda3b700ec2a3b128be31bbc2deaad4d76');
-        delete result.data.confirmations;
+        delete result.confirmations;
         const expected ={
             "hex":"01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff1c0325c308753978435a5f31325138344aedeebd79504fec53c6610000ffffffff01387e814a000000001976a9140f57956c54545eced0a8aa739a5adc6e34ab2db288ac00000000",
             "txid":"83b1345f02f9fb331ec21e0060f7aebda3b700ec2a3b128be31bbc2deaad4d76",
@@ -117,10 +114,7 @@ describe('insight GET /api/tx/:txid coinbase transaction test', () => {
             "time":1552937505,
             "blocktime":1552937505
         }
-        expect(result).to.eql({
-            success: true,
-            data: expected
-        });
+        expect(result).to.eql(expected);
     });
 })
 
@@ -143,10 +137,7 @@ describe('insight GET /api/rawtx/:txid test', () => {
     it('should succeed with txid', async () => {
         var result = await index.instance().insight.rawtx('369d78ee889e8ffd538c89a514539bff2211a254a89ed9643ed07e0fd3909026');
         expect(result).to.eql({
-            success: true,
-            data: {
-                "rawtx": "01000000018bae5e868e5b794a05dfd42aa5a2c6b31e2a8c5ec2c8bfee8e403a1b8dd79c62010000008a4730440220739027f85e42d75b4f117b654bae6ad41d7f2634cfa86308066f5e7247fb626c02207536c9b8f274ff37bb6849bb7ad7ba48514ca72f1b51afa5cf651a30209d0fc34141043cf0a503fd150ad112de4503f7dd17dcdba99e41cd7f8b52315fa1a4f9e499b9493fddcc15a594022f9734b8cf12a068d51328664192f351c3b618e52ae1f85fffffffff020000000000000000416a2231394878696756345179427633744870515663554551797131707a5a56646f41757401620d746578742f6d61726b646f776e055554462d3801610474616731739a0a00000000001976a9149467df677dc153a88243465d09ca5fe8f7ba8cf988ac00000000"
-            }
+            "rawtx": "01000000018bae5e868e5b794a05dfd42aa5a2c6b31e2a8c5ec2c8bfee8e403a1b8dd79c62010000008a4730440220739027f85e42d75b4f117b654bae6ad41d7f2634cfa86308066f5e7247fb626c02207536c9b8f274ff37bb6849bb7ad7ba48514ca72f1b51afa5cf651a30209d0fc34141043cf0a503fd150ad112de4503f7dd17dcdba99e41cd7f8b52315fa1a4f9e499b9493fddcc15a594022f9734b8cf12a068d51328664192f351c3b618e52ae1f85fffffffff020000000000000000416a2231394878696756345179427633744870515663554551797131707a5a56646f41757401620d746578742f6d61726b646f776e055554462d3801610474616731739a0a00000000001976a9149467df677dc153a88243465d09ca5fe8f7ba8cf988ac00000000"
         });
     });
 })
@@ -168,10 +159,8 @@ describe('insight GET /api/block/:blockhash test', () => {
     });
     it('should succeed with blockhash', async () => {
         var result = await index.instance(options).insight.block('000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52');
-        delete result.data.confirmations;
+        delete result.confirmations;
         expect(result).to.eql({
-            success: true,
-            data:  {
                 hash:
                 '000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52',
                // onfirmations: 10,
@@ -199,8 +188,9 @@ describe('insight GET /api/block/:blockhash test', () => {
                previousblockhash:
                 '000000000000000008db5e402d1045c27de3d11a77c2ac7c420838c1b67df725',
                nextblockhash:
-                '0000000000000000046c026c285ed7bc7ba7998f90938eb160c0f69b21dbdf2b' }
-        });
+                '0000000000000000046c026c285ed7bc7ba7998f90938eb160c0f69b21dbdf2b'
+            }
+        );
     });
 
 });
@@ -222,11 +212,8 @@ describe('insight GET /api/rawblock/:blockhash test', () => {
     });
     it('should succeed with blockhash', async () => {
         var result = await index.instance(options).insight.rawblock('000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52');
-        expect(result).to.eql({
-            success: true,
-            data:  {
-                rawblock: "0000c02025f77db6c13808427cacc2771ad1e37dc245102d405edb080000000000000000c425c7fa24d9712eb4ceba1f78266fe34e6658c10f91480501b09592142bff5e94ee9e5cc2ea0b1820a4dc520701000000010000000000000000000000000000000000000000000000000000000000000000ffffffff53037ec908040fef9e5cfabe6d6df41491ca64d04613901a883289cefe0bb98ff57c057e9b05669464ee97d0eb1480000000000000000808061ca3f50a0100142f70726f68617368696e672e636f6d442702002f00000000011281814a000000001976a9147f346e50f5d8eaf4519794668089d9d473a20dbb88ac0000000002000000013dd3087289ab1dd9c2644fec7c73985906f06d44ebf196c06ab51165e9641323000000006b483045022100c8b098c97c6613f9abd391737e8dcc1af7ee59d00f6d49ba4f01c866b7d4eb2702204b946965292283c8c998c965f85bf24b67308870bf99bac047f9b464fd24e1ca412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff01487db11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7bc9080002000000010080c5255123d9ae2fda4e9b10d8d20442917cf04e2acd129f6ffa5779d036a8000000006a47304402201f37c5068e2eda3ec4c491f51dbd447c22003a4614b9284a51cfe5f1df7d7c3d02201aa79d17d2b306538d5693538b8b1fd2ff354286b6606916241a483558e96b9c412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff01857cb11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7cc908000200000001666db3be09b9f8bf5520c5bae680c02fcb54173f1b14a338014911a29fd04de9000000006a4730440220603a05534df953ce410250e150935d6eb9349f100bd07d013082bbe3ac79bc0802205219d2eec4b5ba5f270c0d870e0e741b3a14cb6046d5d7fdc0246e10c2d98e31412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff01c27bb11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7cc90800020000000159c53220930d6f2043239835f5cc00a1708c9b5df43e02479a0f6fd15e885dc4000000006a47304402202852448f44746ad9e6fac1bc2abb66bfa6faaa2d828f056f74f298cfdec3fba202201e4b1d4196c60e137c12bd7d6f5e519f9475634986d716e3bb5b8546b8dab91a412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff01ff7ab11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7cc908000200000001dd90f16cfc854531fbcc48af53989cbeca49f1381649ff54d468e579987ce6d9000000006b483045022100b63ed1e8cbeee5a9f21abca10ac3582ab79f6fb5cde73f562b332a7cfd9268300220047c967acecb77326e069cf388a2898affec665043046c59a5e008ec2092274d412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff013c7ab11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac2dc908000200000001edc0854566874456f0d4ac1ac13aa9f6439caddb55fdea045d0d7011eb36e599000000006a47304402201f1ed57604b6e4c50a1997cd9d78a78a1ca80cbeffc93dfd36a944b289eed611022028648db1adc259cd149091a9e9f7ca5e15142e162d60ed7c86c07d97e85819c6412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff017979b11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7cc90800"
-            }
+        expect(result).to.eql( {
+            rawblock: "0000c02025f77db6c13808427cacc2771ad1e37dc245102d405edb080000000000000000c425c7fa24d9712eb4ceba1f78266fe34e6658c10f91480501b09592142bff5e94ee9e5cc2ea0b1820a4dc520701000000010000000000000000000000000000000000000000000000000000000000000000ffffffff53037ec908040fef9e5cfabe6d6df41491ca64d04613901a883289cefe0bb98ff57c057e9b05669464ee97d0eb1480000000000000000808061ca3f50a0100142f70726f68617368696e672e636f6d442702002f00000000011281814a000000001976a9147f346e50f5d8eaf4519794668089d9d473a20dbb88ac0000000002000000013dd3087289ab1dd9c2644fec7c73985906f06d44ebf196c06ab51165e9641323000000006b483045022100c8b098c97c6613f9abd391737e8dcc1af7ee59d00f6d49ba4f01c866b7d4eb2702204b946965292283c8c998c965f85bf24b67308870bf99bac047f9b464fd24e1ca412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff01487db11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7bc9080002000000010080c5255123d9ae2fda4e9b10d8d20442917cf04e2acd129f6ffa5779d036a8000000006a47304402201f37c5068e2eda3ec4c491f51dbd447c22003a4614b9284a51cfe5f1df7d7c3d02201aa79d17d2b306538d5693538b8b1fd2ff354286b6606916241a483558e96b9c412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff01857cb11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7cc908000200000001666db3be09b9f8bf5520c5bae680c02fcb54173f1b14a338014911a29fd04de9000000006a4730440220603a05534df953ce410250e150935d6eb9349f100bd07d013082bbe3ac79bc0802205219d2eec4b5ba5f270c0d870e0e741b3a14cb6046d5d7fdc0246e10c2d98e31412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff01c27bb11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7cc90800020000000159c53220930d6f2043239835f5cc00a1708c9b5df43e02479a0f6fd15e885dc4000000006a47304402202852448f44746ad9e6fac1bc2abb66bfa6faaa2d828f056f74f298cfdec3fba202201e4b1d4196c60e137c12bd7d6f5e519f9475634986d716e3bb5b8546b8dab91a412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff01ff7ab11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7cc908000200000001dd90f16cfc854531fbcc48af53989cbeca49f1381649ff54d468e579987ce6d9000000006b483045022100b63ed1e8cbeee5a9f21abca10ac3582ab79f6fb5cde73f562b332a7cfd9268300220047c967acecb77326e069cf388a2898affec665043046c59a5e008ec2092274d412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff013c7ab11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac2dc908000200000001edc0854566874456f0d4ac1ac13aa9f6439caddb55fdea045d0d7011eb36e599000000006a47304402201f1ed57604b6e4c50a1997cd9d78a78a1ca80cbeffc93dfd36a944b289eed611022028648db1adc259cd149091a9e9f7ca5e15142e162d60ed7c86c07d97e85819c6412103088dd3ad6826cff6b138ace4ebea9aedb0461f2d585859ee03e8cdebc387e315feffffff017979b11a000000001976a9142e6adaa4d680907fc698afe150cd581da61d4b8f88ac7cc90800"
         });
     });
 })
@@ -249,18 +236,12 @@ describe('insight GET /api/block-index/:height test', () => {
     it('should succeed with height', async () => {
         var result = await index.instance(options).insight.blockindex('575870');
         expect(result).to.eql({
-            success: true,
-            data:  {
-                blockHash: "000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52"
-            }
+            blockHash: "000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52"
         });
 
         var result = await index.instance(options).insight.blockindex(575870);
         expect(result).to.eql({
-            success: true,
-            data:  {
-                blockHash: "000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52"
-            }
+            blockHash: "000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52"
         });
     });
 })
@@ -268,36 +249,32 @@ describe('insight GET /api/block-index/:height test', () => {
 describe('insight GET /api/status?q=getBestBlockHash test', () => {
     it('should succeed with getBestBlockHash', async () => {
         var result = await index.instance(options).insight.status_getBestBlockHash();
-        expect(result.success).to.eql(true);
-        expect(/^[a-fA-F0-9]+$/.test(result.data.bestblockhash)).to.eql(true);
+        expect(/^[a-fA-F0-9]+$/.test(result.bestblockhash)).to.eql(true);
     });
 });
 
 describe('insight GET /api/status?q=getLastBlockHash test', () => {
     it('should succeed with getLastBlockHash', async () => {
         var result = await index.instance(options).insight.status_getLastBlockHash();
-        expect(result.success).to.eql(true);
-        expect(/^[a-fA-F0-9]+$/.test(result.data.lastblockhash)).to.eql(true);
-        expect(/^[a-fA-F0-9]+$/.test(result.data.syncTipHash)).to.eql(true);
+        expect(/^[a-fA-F0-9]+$/.test(result.lastblockhash)).to.eql(true);
+        expect(/^[a-fA-F0-9]+$/.test(result.syncTipHash)).to.eql(true);
     });
 });
 
 describe('insight GET /api/status?q=getDifficulty test', () => {
     it('should succeed with getDifficulty', async () => {
         var result = await index.instance(options).insight.status_getDifficulty();
-        expect(result.success).to.eql(true);
-        expect(/^\d+\.\d*$/.test(result.data.difficulty + '')).to.eql(true);
+        expect(/^\d+\.\d*$/.test(result.difficulty + '')).to.eql(true);
     });
 });
 
 describe('insight GET /api/status test', () => {
     it('should succeed with default status', async () => {
         var result = await index.instance(options).insight.status();
-        expect(result.success).to.eql(true);
-        delete result.data.info.blocks;
-        delete result.data.info.difficulty;
-        delete result.data.info.connections;
-        expect(result.data).to.eql({
+        delete result.info.blocks;
+        delete result.info.difficulty;
+        delete result.info.connections;
+        expect(result).to.eql({
             info:
                 {
                     version: 100010100,
@@ -334,11 +311,10 @@ describe('insight POST /api/addrs/txs test', () => {
         var result = await index.instance(options).insight.getAddressesTxs(
             '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX'
         );
-        expect(result.success).to.eql(true);
-        for (let i = 0; i< result.data.items.length; i++) {
-            delete result.data.items[i].confirmations;
+        for (let i = 0; i< result.items.length; i++) {
+            delete result.items[i].confirmations;
         }
-        expect(result.data).to.eql(
+        expect(result).to.eql(
             {
                 "totalItems":4,
                 "from":0,
@@ -575,12 +551,10 @@ describe('insight POST /api/addrs/txs test', () => {
             true,
             true
         );
-        expect(result.success).to.eql(true);
-        for (let i = 0; i< result.data.items.length; i++) {
-            delete result.data.items[i].confirmations;
+        for (let i = 0; i< result.items.length; i++) {
+            delete result.items[i].confirmations;
         }
-        expect(result.success).to.eql(true);
-        expect(result.data).to.eql(
+        expect(result).to.eql(
             {
                 "totalItems":4,
                 "from":0,
@@ -823,7 +797,6 @@ describe('insight POST /api/addrs/txs test', () => {
 describe('insight GET /api/addr/:address/utxo test', () => {
     it('should fail with invalid address', async () => {
         var result = await index.instance(options).insight.getAddressUtxos('address');
-        expect(result.success).to.eql(false);
         expect(result).to.eql({
             success: false,
             message: 'Request failed with status code 500'
@@ -832,12 +805,10 @@ describe('insight GET /api/addr/:address/utxo test', () => {
 
     it('should succeed with getting utxos', async () => {
         var result = await index.instance(options).insight.getAddressUtxos('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
-        expect(result.success).to.eql(true);
-        delete result.data[0].confirmations;
-        delete result.data[1].confirmations;
-        expect(result).to.eql({
-            success: true,
-            data: [
+        delete result[0].confirmations;
+        delete result[1].confirmations;
+        expect(result).to.eql(
+            [
                 {
                     address: '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
                     txid: '5e3014372338f079f005eedc85359e4d96b8440e7dbeb8c35c4182e0c19a1a12',
@@ -862,15 +833,13 @@ describe('insight GET /api/addr/:address/utxo test', () => {
                     scriptPubKey: '76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac'
                 }
             ]
-        });
+        );
         var result = await index.instance(options).insight.getAddressUtxos(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD']);
-        expect(result.success).to.eql(true);
-        delete result.data[0].confirmations;
-        delete result.data[1].confirmations;
-        delete result.data[2].confirmations;
-        expect(result).to.eql({
-            success: true,
-            data: [
+        delete result[0].confirmations;
+        delete result[1].confirmations;
+        delete result[2].confirmations;
+        expect(result).to.eql(
+            [
                 {
                     "address": "1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD",
                     "amount": 0.00015411,
@@ -905,10 +874,22 @@ describe('insight GET /api/addr/:address/utxo test', () => {
                     scriptPubKey: '76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac'
                 }
             ]
-        });
+        );
     });
 });
 
+describe('insight POST /api/tx/send test', () => {
+    it('should fail with invalid address', async () => {
+        var result = await index.instance(options).insight.sendTx('0100000001c8a78a47a63cc8378ee1abb29b00fee57f54700008907b2cc212fd1077f46229010000006a47304402207ca8de8bbc656f7df9f99790b61799e7745d12d354a1f346a20fbc32cc76e045022005e5536c5c8997670566d693f725072cec9db8d24aa048caad1108e0400bfcd2412103b1fa158185120c1266ff328964446cdb5816a37b2668411e847b4d2395a6a265ffffffff02273c0000000000001976a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac43c40e00000000001976a914256b0efdfc907d12125c4fbb1754b38e7c8b1a1788ac00000000');
+        expect(result).to.eql({
+            "message": {
+                "code": 1,
+                "message": "the transaction was rejected by network rules.\n\ntransaction already in block chain\n[0100000001c8a78a47a63cc8378ee1abb29b00fee57f54700008907b2cc212fd1077f46229010000006a47304402207ca8de8bbc656f7df9f99790b61799e7745d12d354a1f346a20fbc32cc76e045022005e5536c5c8997670566d693f725072cec9db8d24aa048caad1108e0400bfcd2412103b1fa158185120c1266ff328964446cdb5816a37b2668411e847b4d2395a6a265ffffffff02273c0000000000001976a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac43c40e00000000001976a914256b0efdfc907d12125c4fbb1754b38e7c8b1a1788ac00000000]"
+            },
+            "errors": []
+        });
+    });
+});
 
 describe('insight POST /api/addrs/utxo test', () => {
     it('should fail with invalid address', async () => {
@@ -922,13 +903,11 @@ describe('insight POST /api/addrs/utxo test', () => {
 
     it('should succeed with getting utxos', async () => {
         var result = await index.instance(options).insight.getAddressesUtxos(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD']);
-        expect(result.success).to.eql(true);
-        delete result.data[0].confirmations;
-        delete result.data[1].confirmations;
-        delete result.data[2].confirmations;
-        expect(result).to.eql({
-            success: true,
-            data: [
+        delete result[0].confirmations;
+        delete result[1].confirmations;
+        delete result[2].confirmations;
+        expect(result).to.eql(
+            [
                 {
                     "address": "1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD",
                     "amount": 0.00015411,
@@ -963,7 +942,7 @@ describe('insight POST /api/addrs/utxo test', () => {
                     scriptPubKey: '76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac'
                 }
             ]
-        });
+        );
     });
 
     /**

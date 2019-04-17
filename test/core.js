@@ -7,7 +7,7 @@ const options = {
     insight_api: 'https://api.bitindex.network'
 };
 
-describe('core GET /api/addrs/utxos', () => {
+describe('core GET /api/v2/addrs/utxos', () => {
     it('should fail no address', async () => {
         var result = await index.instance().getAddressUtxos();
         expect(result).to.eql({
@@ -61,3 +61,16 @@ describe('core GET /api/addrs/utxos', () => {
         });
     });
 })
+
+describe('insight POST /api/v2/tx/send test', () => {
+    it('should fail with invalid address', async () => {
+        var result = await index.instance(options).sendTx('0100000001c8a78a47a63cc8378ee1abb29b00fee57f54700008907b2cc212fd1077f46229010000006a47304402207ca8de8bbc656f7df9f99790b61799e7745d12d354a1f346a20fbc32cc76e045022005e5536c5c8997670566d693f725072cec9db8d24aa048caad1108e0400bfcd2412103b1fa158185120c1266ff328964446cdb5816a37b2668411e847b4d2395a6a265ffffffff02273c0000000000001976a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac43c40e00000000001976a914256b0efdfc907d12125c4fbb1754b38e7c8b1a1788ac00000000');
+        expect(result).to.eql({
+            "message": {
+                "code": 1,
+                "message": "the transaction was rejected by network rules.\n\ntransaction already in block chain\n[0100000001c8a78a47a63cc8378ee1abb29b00fee57f54700008907b2cc212fd1077f46229010000006a47304402207ca8de8bbc656f7df9f99790b61799e7745d12d354a1f346a20fbc32cc76e045022005e5536c5c8997670566d693f725072cec9db8d24aa048caad1108e0400bfcd2412103b1fa158185120c1266ff328964446cdb5816a37b2668411e847b4d2395a6a265ffffffff02273c0000000000001976a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac43c40e00000000001976a914256b0efdfc907d12125c4fbb1754b38e7c8b1a1788ac00000000]"
+            },
+            "errors": []
+        });
+    });
+});

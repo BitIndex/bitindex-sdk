@@ -75,6 +75,10 @@ export class InsightAPI {
     return insightClient.addrsTxs(addrs, fromIndex, toIndex, noAsm, noScript, noSpent, callback);
   }
 
+  sendTx(rawtx: string, callback?: Function): Promise<any> {
+    const insightClient = new InsightClient(this.options);
+    return insightClient.sendTx(rawtx, callback);
+  }
 }
 
 export default class BitIndexSDK {
@@ -92,6 +96,10 @@ export default class BitIndexSDK {
 
   getAddressUtxos(addrs: any, callback?: Function): Promise<any> {
     return this.core.getAddressUtxos(addrs, callback);
+  }
+
+  sendTx(rawtx: string, callback?: Function): Promise<any> {
+    return this.core.sendTx(rawtx, callback);
   }
 }
 
