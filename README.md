@@ -3,6 +3,8 @@ https://www.bitindex.network
 
 BitIndex is a powerful Bitcoin SV blockchain API built for developers.
 
+*Insight-API Compatible*
+
 ![bitindex_header](bitindex_header.png)
 
 [View HTML API Documentation](https://www.bitindex.network/developers/api-documentation-v3.html)
@@ -12,8 +14,8 @@ BitIndex is a powerful Bitcoin SV blockchain API built for developers.
 
 Easily query balances, utxos, and transactions.
 
-https://api.bitindex.network/api/v3/main/addr/15ES6BBymPDMYqKHEak2rpwyRHazFaBi67
-https://api.bitindex.network/api/v3/main/addr/15ES6BBymPDMYqKHEak2rpwyRHazFaBi67/utxo
+https://api.bitindex.network/api/v3/main/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX
+https://api.bitindex.network/api/v3/main/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX/utxo
 https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6
 
 ---
@@ -29,7 +31,7 @@ https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f
     - [Basic Browser Example](https://github.com/BitIndex/bitindex-sdk/blob/master/dist/basic.html)
     - [Live Browser Example](https://media.bitcoinfiles.org/94dc4e05dc1a1cd87d62e3b1d69b7f0dd15dd7555948849b9ce7e81a9f690993)
     - [Typescript Definitions](https://github.com/BitIndex/bitindex-sdk/blob/master/dist)
-* Operations
+* [Operations](#operations)
     - [Address](#address)
         - [address.getUtxos](#addressgetUtxos)
         - [address.getStatus](#addressgetStatus)
@@ -70,10 +72,17 @@ npm install bitindex-sdk --save
 ```javascript
 // Node
 var bitindex = require('bitindex-sdk').instance();
+```
 
-// Browser
-var bitindex = new BitIndex();
-
+```html
+<!-- Browser -->
+<script src="dist/bundle.min.js"></script>
+<script language="javascript">
+    // ...
+    var bitindex = new BitIndex();
+    var result = await bitindex.address.getUtxos('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
+    console.log('result', result);
+</script>
 ```
 
 ## Prerequisites

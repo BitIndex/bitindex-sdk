@@ -36,7 +36,7 @@ class XpubMethods {
     }
   }
 
-  getUtxos(xpub:  string, callback?: Function, fromIndex: number = 0, toIndex: number = 20): Promise<any> {
+  getUtxos(xpub: string, callback?: Function, fromIndex: number = 0, toIndex: number = 20): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.xpub_getUtxos(xpub, fromIndex, toIndex, callback);
   }

@@ -35,7 +35,7 @@ export class APIClient {
             callback(data);
         }
         if (resolveOrReject) {
-            return resolveOrReject(data)
+            return resolveOrReject(data);
         }
     }
 
