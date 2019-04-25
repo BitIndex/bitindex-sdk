@@ -1,13 +1,22 @@
-# bitindex-sdk
-> BitIndex Javascript SDK
+# BitIndex Javascript SDK
 https://www.bitindex.network
 
-[BitIndex](https://www.bitindex.network) is a Bitcoin SV blockchain API for developers.
+BitIndex is a powerful Bitcoin SV blockchain API built for developers.
 
-Easily query transactions, addresses, blocks, xpubs and more with a powerful and simple REST API.
+![bitindex_header](bitindex_header.png)
 
 [View HTML API Documentation](https://www.bitindex.network/developers/api-documentation-v3.html)
 
+---
+## Quick Preview
+
+Easily query balances, utxos, and transactions.
+
+https://api.bitindex.network/api/v3/main/addr/15ES6BBymPDMYqKHEak2rpwyRHazFaBi67
+https://api.bitindex.network/api/v3/main/addr/15ES6BBymPDMYqKHEak2rpwyRHazFaBi67/utxo
+https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6
+
+---
 ## Table of Contents
 * [Installation and Usage](#installation-and-usage)
 * [Prerequisites](#Prerequisites)
@@ -15,6 +24,11 @@ Easily query transactions, addresses, blocks, xpubs and more with a powerful and
 * [Endpoints](#endpoints)
 * [Promises vs. Callbacks](#promises-vs-callback)
 * [Browser Examples](https://github.com/BitIndex/bitindex-sdk/tree/master/lib/examples)
+* [Distribution](https://github.com/BitIndex/bitindex-sdk/tree/master/dist)
+    - [Latest Bundle](https://github.com/BitIndex/bitindex-sdk/blob/master/dist/bundle.min.js)
+    - [Basic Browser Example](https://github.com/BitIndex/bitindex-sdk/blob/master/dist/basic.html)
+    - [Live Browser Example](https://media.bitcoinfiles.org/94dc4e05dc1a1cd87d62e3b1d69b7f0dd15dd7555948849b9ce7e81a9f690993)
+    - [Typescript Definitions](https://github.com/BitIndex/bitindex-sdk/blob/master/dist)
 * Operations
     - [Address](#address)
         - [address.getUtxos](#addressgetUtxos)
