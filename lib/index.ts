@@ -162,6 +162,13 @@ class WebhookMethods {
   }
 }
 
+const defaultOptions: any = {
+  api_url: 'https://api.bitindex.network',
+  network: 'main',        // 'main', test', or 'stn'
+  version_path: 'api/v3', // Do not change
+  api_key: ''         // Set to your API key for xpub and webhook related calls
+}
+
 export default class BitIndexSDK {
   options;
   address;
@@ -170,12 +177,8 @@ export default class BitIndexSDK {
   block;
   chaininfo;
   webhook;
-  constructor(options?: any) {
-    if (options) {
-      this.options = options;
-    } else {
-      throw Error("Required options for constructor")
-    }
+  constructor(providedOptions?: any) {
+    this.options = Object.assign({}, defaultOptions, providedOptions);
     this.address = new AddressMethods(this.options);
     this.xpub = new XpubMethods(this.options);
     this.tx = new TxMethods(this.options);
@@ -186,12 +189,6 @@ export default class BitIndexSDK {
 }
 
 export function instance(options?: any): BitIndexSDK {
-  const defaultOptions: any = {
-    api_url: 'https://api.bitindex.network',
-    network: 'main',        // 'main', test', or 'stn'
-    version_path: 'api/v3', // Do not change
-    api_key: ''         // Set to your API key for xpub and webhook related calls
-  }
   const mergedOptions = Object.assign({}, defaultOptions, options);
   return new BitIndexSDK(mergedOptions);
 }

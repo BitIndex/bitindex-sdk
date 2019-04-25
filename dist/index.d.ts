@@ -6,6 +6,6 @@ export default class BitIndexSDK {
     block: any;
     chaininfo: any;
     webhook: any;
-    constructor(options?: any);
+    constructor(providedOptions?: any);
 }
 export declare function instance(options?: any): BitIndexSDK;

@@ -135,14 +135,15 @@ class WebhookMethods {
         return apiClient.webhook_getMonitoredAddresses(callback);
     }
 }
+const defaultOptions = {
+    api_url: 'https://api.bitindex.network',
+    network: 'main',
+    version_path: 'api/v3',
+    api_key: '' // Set to your API key for xpub and webhook related calls
+};
 class BitIndexSDK {
-    constructor(options) {
-        if (options) {
-            this.options = options;
-        }
-        else {
-            throw Error("Required options for constructor");
-        }
+    constructor(providedOptions) {
+        this.options = Object.assign({}, defaultOptions, providedOptions);
         this.address = new AddressMethods(this.options);
         this.xpub = new XpubMethods(this.options);
         this.tx = new TxMethods(this.options);
@@ -153,12 +154,6 @@ class BitIndexSDK {
 }
 exports.default = BitIndexSDK;
 function instance(options) {
-    const defaultOptions = {
-        api_url: 'https://api.bitindex.network',
-        network: 'main',
-        version_path: 'api/v3',
-        api_key: '' // Set to your API key for xpub and webhook related calls
-    };
     const mergedOptions = Object.assign({}, defaultOptions, options);
     return new BitIndexSDK(mergedOptions);
 }
