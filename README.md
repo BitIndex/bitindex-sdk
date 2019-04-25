@@ -6,6 +6,8 @@ https://www.bitindex.network
 
 Easily query transactions, addresses, blocks, xpubs and more with a powerful and simple REST API.
 
+[View HTML API Documentation](https://www.bitindex.network/developers/api-documentation-v3.html)
+
 ## Table of Contents
 * [Installation and Usage](#installation-and-usage)
 * [Prerequisites](#Prerequisites)
