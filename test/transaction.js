@@ -8,18 +8,10 @@ const options = {
 };
 
 describe('#tx.get GET /tx/:txid test', () => {
-   it('should fail with undefined', async () => {
-      var result = await index.instance(options).tx.get();
-      expect(result).to.eql({
-          success: false,
-          message: 'txid required'
-      });
-  });
-
     it('should fail with invalid address', async () => {
         var result = await index.instance(options).tx.get('tx');
         expect(result).to.eql({
-            success: false,
+            code: 500,
             message: 'Request failed with status code 500'
         });
     });
@@ -80,25 +72,15 @@ describe('#tx.get GET /tx/:txid test', () => {
 });
 
 describe('#tx.getRaw GET /rawtx/:txid test', () => {
-   it('should fail with undefined', async () => {
-      var result = await index.instance(options).tx.getRaw();
-      expect(result).to.eql({
-          success: false,
-          message: 'txid required'
-      });
-   });
-
     it('should fail with invalid address', async () => {
         var result = await index.instance(options).tx.getRaw('tx');
         expect(result).to.eql({
-            success: false,
+            code: 500,
             message: 'Request failed with status code 500'
         });
     });
-
     it('should succeed', async () => {
         var result = await index.instance(options).tx.getRaw('96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6');
-
         expect(result).to.eql(
          {
             rawtx: "0100000001270e55963a167a2fae66307efa3565032402c1387d62e5276464295d2a6834d8010000008a4730440220132f6d484de9d34d314aec945865af5da95f35cf4c7cc271d40bc99f8d7f12e3022051fcb2ce4461d1c6e8a778f5e4dcb27c8461d18e0652f68a7a09a98e95df5cb74141044e2c1e2c055e7aefc291679882382c35894a6aa6dd95644f598e506c239f9d83b1d9671c1d9673e3c2b74f07e8032343f3adc21367bd4cffae92fe31efcd598affffffff020000000000000000456a2231394878696756345179427633744870515663554551797131707a5a56646f41757404617364660d746578742f6d61726b646f776e055554462d3807616e6f7468657240390000000000001976a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac00000000"

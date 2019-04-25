@@ -1,5 +1,4 @@
 import axios from 'axios';
-import * as bsv from 'bsv';
 
 export interface BitIndexApiClientOptions {
     api_url: string;
@@ -44,7 +43,7 @@ export class APIClient {
         return new Promise((resolve, reject) => {
             if (!txid || /^(\s*)$/.test(txid)) {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: 422,
                     message: 'txid required'
                 }, callback);
             }
@@ -57,7 +56,7 @@ export class APIClient {
 
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -68,7 +67,7 @@ export class APIClient {
         return new Promise((resolve, reject) => {
              if (!txid || /^(\s*)$/.test(txid)) {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: 422,
                     message: 'txid required'
                 }, callback);
             }
@@ -80,7 +79,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -97,7 +96,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -115,7 +114,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -132,7 +131,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -157,7 +156,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -168,7 +167,7 @@ export class APIClient {
         return new Promise((resolve, reject) => {
              if (!blockhash || /^(\s*)$/.test(blockhash)) {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: 422,
                     message: 'blockhash required'
                 }, callback);
             }
@@ -180,7 +179,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -190,7 +189,7 @@ export class APIClient {
         return new Promise((resolve, reject) => {
              if (!blockhash || /^(\s*)$/.test(blockhash)) {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: 422,
                     message: 'blockhash required'
                 }, callback);
             }
@@ -202,7 +201,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -212,7 +211,7 @@ export class APIClient {
         return new Promise((resolve, reject) => {
              if (!blockhash || /^(\s*)$/.test(blockhash)) {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: 422,
                     message: 'blockhash required'
                 }, callback);
             }
@@ -224,7 +223,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -234,7 +233,7 @@ export class APIClient {
         return new Promise((resolve, reject) => {
              if (!height || /^(\s*)$/.test(height)) {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: 422,
                     message: 'height required'
                 }, callback);
             }
@@ -246,7 +245,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -263,7 +262,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -280,7 +279,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -297,7 +296,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -314,7 +313,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -338,17 +337,6 @@ export class APIClient {
             addrs = address;
         }
 
-        for (const i of addrs) {
-            if (!bsv.Address.isValid(i)) {
-                return new Promise((resolve, reject) => {
-                    this.callbackAndResolve(resolve, {
-                        code: 422,
-                        message: 'invalid address'
-                    }, callback)
-                });
-            }
-        }
-
         return new Promise((resolve, reject) => {
             axios.get(this.fullUrl + `/addr/${address}/utxo`,
                 {
@@ -358,7 +346,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -380,18 +368,6 @@ export class APIClient {
         } else {
             addrs = address;
         }
-
-        for (const i of addrs) {
-            if (!bsv.Address.isValid(i)) {
-                return new Promise((resolve, reject) => {
-                    this.callbackAndResolve(resolve, {
-                        code: 422,
-                        message: 'invalid address'
-                    }, callback)
-                });
-            }
-        }
-
         return new Promise((resolve, reject) => {
             axios.get(this.fullUrl + `/addr/${address}?fromIndex=${fromIndex}&toIndex=${toIndex}`,
                 {
@@ -401,7 +377,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -421,16 +397,7 @@ export class APIClient {
     }
 
     xpub_getStatus(xpub: any, callback?: Function): Promise<any> {
-        try {
-            bsv.HDPublicKey.fromString(xpub);
-        } catch (ex) {
-            return new Promise((resolve, reject) => {
-                this.callbackAndResolve(resolve, {
-                    code: 422,
-                    message: 'invalid xpub'
-                }, callback)
-            });
-        }
+
         return new Promise((resolve, reject) => {
             axios.get(this.fullUrl + `/xpub/${xpub}/status?&api_key=${this.options.api_key}`,
                 {
@@ -440,7 +407,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    code: 500,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -448,16 +415,7 @@ export class APIClient {
     }
 
     xpub_getAddressNext(xpub: any, reserveTime: number = 0, callback?: Function): Promise<any> {
-        try {
-            bsv.HDPublicKey.fromString(xpub);
-        } catch (ex) {
-            return new Promise((resolve, reject) => {
-                this.callbackAndResolve(resolve, {
-                    code: 422,
-                    message: 'invalid xpub'
-                }, callback)
-            });
-        }
+
         return new Promise((resolve, reject) => {
             axios.get(this.fullUrl + `/xpub/${xpub}/addrs/next?reserveTime=${reserveTime}&api_key=${this.options.api_key}`,
                 {
@@ -467,7 +425,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    code: 500,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -475,16 +433,6 @@ export class APIClient {
     }
 
     xpub_getTransactions(xpub: any, fromIndex: number = 0, toIndex: number = 1000, callback?: Function): Promise<any> {
-        try {
-            bsv.HDPublicKey.fromString(xpub);
-        } catch (ex) {
-            return new Promise((resolve, reject) => {
-                this.callbackAndResolve(resolve, {
-                    code: 422,
-                    message: 'invalid xpub'
-                }, callback)
-            });
-        }
         return new Promise((resolve, reject) => {
             axios.get(this.fullUrl + `/xpub/${xpub}/txs?fromIndex=${fromIndex}&toIndex=${toIndex}&api_key=${this.options.api_key}`,
                 {
@@ -494,7 +442,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    code: 500,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -502,16 +450,7 @@ export class APIClient {
     }
 
     xpub_getAddresses(xpub: any, fromIndex: number = 0, toIndex: number = 1000, callback?: Function): Promise<any> {
-        try {
-            bsv.HDPublicKey.fromString(xpub);
-        } catch (ex) {
-            return new Promise((resolve, reject) => {
-                this.callbackAndResolve(resolve, {
-                    code: 422,
-                    message: 'invalid xpub'
-                }, callback)
-            });
-        }
+
         return new Promise((resolve, reject) => {
             axios.get(this.fullUrl + `/xpub/${xpub}/addrs?fromIndex=${fromIndex}&toIndex=${toIndex}&api_key=${this.options.api_key}`,
                 {
@@ -521,7 +460,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    code: 500,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -529,16 +468,7 @@ export class APIClient {
     }
 
     xpub_getUtxos(xpub: any, fromIndex: number = 0, toIndex: number = 1000, callback?: Function): Promise<any> {
-        try {
-            bsv.HDPublicKey.fromString(xpub);
-        } catch (ex) {
-            return new Promise((resolve, reject) => {
-                this.callbackAndResolve(resolve, {
-                    code: 422,
-                    message: 'invalid xpub'
-                }, callback)
-            });
-        }
+
         return new Promise((resolve, reject) => {
             axios.get(this.fullUrl + `/xpub/${xpub}/utxo?fromIndex=${fromIndex}&toIndex=${toIndex}&api_key=${this.options.api_key}`,
                 {
@@ -548,7 +478,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    code: 500,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -569,16 +499,6 @@ export class APIClient {
             addrs.push(address);
         } else {
             addrs = address;
-        }
-        for (const i of addrs) {
-            if (!bsv.Address.isValid(i)) {
-                return new Promise((resolve, reject) => {
-                    this.callbackAndResolve(resolve, {
-                        code: 422,
-                        message: 'invalid address'
-                    }, callback)
-                });
-            }
         }
 
         let payload: any = {
@@ -602,7 +522,7 @@ export class APIClient {
                     this.callbackAndResolve(resolve, response.data, callback);
                 }).catch((ex) => {
                     this.callbackAndResolve(resolve, {
-                        success: false,
+                        code: ex.response.status,
                         message: ex.message ? ex.message : ex.toString()
                     }, callback)
                 })
@@ -619,7 +539,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -641,16 +561,7 @@ export class APIClient {
         } else {
             addrs = address;
         }
-        for (const i of addrs) {
-            if (!bsv.Address.isValid(i)) {
-                return new Promise((resolve, reject) => {
-                    this.callbackAndResolve(resolve, {
-                        code: 422,
-                        message: 'invalid address'
-                    }, callback)
-                });
-            }
-        }
+
         return new Promise((resolve, reject) => {
             axios.get(this.fullUrl + `/addr/${address}`,
                 {
@@ -660,7 +571,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })
@@ -681,15 +592,7 @@ export class APIClient {
         } else {
             addrs = address;
         }
-        addrs.map((i) => {
-            if (!bsv.Address.isValid(i)) {
-                return new Promise((resolve, reject) => {
-                    this.callbackAndResolve(resolve, {
-                        message: 'invalid address'
-                    }, callback)
-                });
-            }
-        });
+
         return new Promise((resolve, reject) => {
 
             let payload: any = {
@@ -723,7 +626,7 @@ export class APIClient {
                 this.callbackAndResolve(resolve, response.data, callback);
             }).catch((ex) => {
                 this.callbackAndResolve(resolve, {
-                    success: false,
+                    code: ex.response.status,
                     message: ex.message ? ex.message : ex.toString()
                 }, callback)
             })

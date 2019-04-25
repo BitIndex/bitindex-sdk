@@ -51,6 +51,9 @@ https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f
 
 ### Address
 
+```javascript
+var result = await bitindex.instance(options).address.getTransactions('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
+```
 ### Block
 
 ### Chain Info

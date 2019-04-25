@@ -18,7 +18,7 @@ class AddressMethods {
     return apiClient.address_getSummary(addr, callback);
   }
 
-  getTxs(addr: any, callback?: Function, fromIndex: number = 0, toIndex: number = 20, noAsm: boolean = true, noScript: boolean = true, noSpent: boolean = true): Promise<any> {
+  getTransactions(addr: any, callback?: Function, fromIndex: number = 0, toIndex: number = 20, noAsm: boolean = true, noScript: boolean = true, noSpent: boolean = true): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.address_getTxs(addr, fromIndex, toIndex, noAsm, noScript, noSpent, callback);
   }
@@ -186,7 +186,14 @@ export default class BitIndexSDK {
 }
 
 export function instance(options?: any): BitIndexSDK {
-  return new BitIndexSDK(options);
+  const defaultOptions: any = {
+    api_url: 'https://api.bitindex.network',
+    network: 'main',        // 'main', test', or 'stn'
+    version_path: 'api/v3', // Do not change
+    api_key: ''         // Set to your API key for xpub and webhook related calls
+  }
+  const mergedOptions = Object.assign({}, defaultOptions, options);
+  return new BitIndexSDK(mergedOptions);
 }
 
 try {

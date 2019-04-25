@@ -1,6 +1,6 @@
 {
   "name": "bitindex-sdk",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "BitIndex Javascript SDK - https://www.bitindex.network",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -54,8 +54,7 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "bsv": "^0.26.5"
+    "axios": "^0.18.0"
   },
   "files": [
     "dist/*"

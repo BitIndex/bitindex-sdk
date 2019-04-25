@@ -12,7 +12,7 @@
       r(async () => {
         // When content loaded in page on ready, then run this code....
         var bitindex = new BitIndex();
-        var result = await bitindex.insight.getAddressUtxos('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
+        var result = await bitindex.address.getUtxos('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
         console.log('result', result);
         document.getElementById('results').innerHTML = JSON.stringify(result);
       });

@@ -7,9 +7,9 @@ const options = {
    api_url: 'https://api.bitindex.network',
 };
 
-describe('#getTxs POST /addrs/txs test', () => {
+describe('#getTransactions POST /addrs/txs test', () => {
     it('should succeed with default status', async () => {
-        var result = await index.instance(options).address.getTxs(
+        var result = await index.instance(options).address.getTransactions(
             '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX'
         );
         for (let i = 0; i< result.items.length; i++) {
@@ -244,7 +244,7 @@ describe('#getTxs POST /addrs/txs test', () => {
              }
         );
 
-        var result = await index.instance(options).address.getTxs(
+        var result = await index.instance(options).address.getTransactions(
             '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
             undefined,
             1,
@@ -498,19 +498,12 @@ describe('#getTxs POST /addrs/txs test', () => {
 
 
 describe('#getStatus GET /addr/:address test', () => {
-   it('should fail with undefined address', async () => {
-      var result = await index.instance(options).address.getStatus();
-      expect(result).to.eql({
-          code: 422,
-          message: 'address required'
-      });
-  });
 
     it('should fail with invalid address', async () => {
         var result = await index.instance(options).address.getStatus('address');
         expect(result).to.eql({
-            code: 422,
-            message: 'invalid address'
+            code: 500,
+            message: 'Request failed with status code 500'
         });
     });
 
@@ -543,19 +536,11 @@ describe('#getStatus GET /addr/:address test', () => {
 
 
 describe('#getUtxos (single address) GET /addr/:address/utxo test', () => {
-   it('should fail with undefined address', async () => {
-      var result = await index.instance(options).address.getUtxos();
-      expect(result).to.eql({
-          code: 422,
-          message: 'address required'
-      });
-  });
-
     it('should fail with invalid address', async () => {
         var result = await index.instance(options).address.getUtxos('address');
         expect(result).to.eql({
-            code: 422,
-            message: 'invalid address'
+            code: 500,
+            message: 'Request failed with status code 500'
         });
     });
 
@@ -638,8 +623,8 @@ describe('#getUtxos (multiple addresses) POST /addrs/utxo test', () => {
     it('should fail with invalid address', async () => {
         var result = await index.instance(options).address.getUtxos(['asdfsf', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD']);
         expect(result).to.eql({
-            code: 422,
-            message: 'invalid address'
+            code: 500,
+            message: 'Request failed with status code 500'
         });
     });
 

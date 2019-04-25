@@ -9,16 +9,9 @@ const options = {
 
 describe('#block.getByBlockHash GET /api/block/:blockhash test', () => {
     it('should fail no blockhash', async () => {
-        var result = await index.instance(options).block.getByBlockHash();
-        expect(result).to.eql({
-            success: false,
-            message: "blockhash required"
-        });
-    });
-    it('should fail no blockhash', async () => {
         var result = await index.instance(options).block.getByBlockHash('inv');
         expect(result).to.eql({
-            success: false,
+            code: 500,
             message: "Request failed with status code 500"
         });
     });
@@ -62,16 +55,9 @@ describe('#block.getByBlockHash GET /api/block/:blockhash test', () => {
 
 describe('#block.getByBlockHashRaw GET /rawblock/:blockhash test', () => {
     it('should fail no blockhash', async () => {
-        var result = await index.instance(options).block.getByBlockHashRaw();
-        expect(result).to.eql({
-            success: false,
-            message: "blockhash required"
-        });
-    });
-    it('should fail no blockhash', async () => {
         var result = await index.instance(options).block.getByBlockHashRaw('inv');
         expect(result).to.eql({
-            success: false,
+            code: 500,
             message: "Request failed with status code 500"
         });
     });
@@ -84,17 +70,10 @@ describe('#block.getByBlockHashRaw GET /rawblock/:blockhash test', () => {
 })
 
 describe('#block.getBlockHashByIndex GET /block-index/:height test', () => {
-    it('should fail no height', async () => {
-        var result = await index.instance(options).block.getBlockHashByIndex();
-        expect(result).to.eql({
-            success: false,
-            message: "height required"
-        });
-    });
-    it('should fail no height', async () => {
+    it('should fail invalid height', async () => {
         var result = await index.instance(options).block.getBlockHashByIndex('inv');
         expect(result).to.eql({
-            success: false,
+            code: 500,
             message: "Request failed with status code 500"
         });
     });

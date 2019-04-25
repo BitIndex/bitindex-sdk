@@ -5,23 +5,15 @@ var index = require('../dist/index.js');
 const options = {
     // api_url: 'http://localhost:3000',
     api_url: 'https://api.bitindex.network',
-    api_key: '...' // Get your api key at www.bitindex.network
+    // api_key: '...' // Get your api key at www.bitindex.network
 };
 
 describe('#getUtxos GET /xpub/:xpub/utxo test', () => {
-   it('should fail with undefined address', async () => {
-      var result = await index.instance(options).xpub.getUtxos();
-      expect(result).to.eql({
-          code: 422,
-          message: 'invalid xpub'
-      });
-  });
-
    it('should fail with invalid xpub', async () => {
       var result = await index.instance(options).xpub.getUtxos('xpub');
       expect(result).to.eql({
          code: 422,
-         message: 'invalid xpub'
+         message: 'Request failed with status code 422'
       });
    });
 
@@ -48,19 +40,12 @@ describe('#getUtxos GET /xpub/:xpub/utxo test', () => {
 });
 
 describe('#getAddresses GET /xpub/:xpub/addrs test', () => {
-   it('should fail with undefined address', async () => {
-      var result = await index.instance(options).xpub.getAddresses();
-      expect(result).to.eql({
-          code: 422,
-          message: 'invalid xpub'
-      });
-  });
 
    it('should fail with invalid xpub', async () => {
       var result = await index.instance(options).xpub.getAddresses('xpub');
       expect(result).to.eql({
          code: 422,
-         message: 'invalid xpub'
+         message: 'Request failed with status code 422'
       });
    });
 
@@ -87,19 +72,12 @@ describe('#getAddresses GET /xpub/:xpub/addrs test', () => {
 
 
 describe('#getStatus GET /xpub/:xpub/status test', () => {
-   it('should fail with undefined address', async () => {
-      var result = await index.instance(options).xpub.getStatus();
-      expect(result).to.eql({
-          code: 422,
-          message: 'invalid xpub'
-      });
-  });
 
    it('should fail with invalid xpub', async () => {
       var result = await index.instance(options).xpub.getStatus('xpub');
       expect(result).to.eql({
          code: 422,
-         message: 'invalid xpub'
+         message: 'Request failed with status code 422'
       });
    });
 
@@ -116,19 +94,12 @@ describe('#getStatus GET /xpub/:xpub/status test', () => {
 
 
 describe('#getTransactions GET /xpub/:xpub/txs test', () => {
-   it('should fail with undefined address', async () => {
-      var result = await index.instance(options).xpub.getTransactions();
-      expect(result).to.eql({
-          code: 422,
-          message: 'invalid xpub'
-      });
-  });
 
    it('should fail with invalid xpub', async () => {
       var result = await index.instance(options).xpub.getTransactions('xpub');
       expect(result).to.eql({
          code: 422,
-         message: 'invalid xpub'
+         message: 'Request failed with status code 422'
       });
    });
 
@@ -148,19 +119,12 @@ describe('#getTransactions GET /xpub/:xpub/txs test', () => {
 });
 
 describe('#getAddressNext GET /xpub/:xpub/addrs/next test', () => {
-   it('should fail with undefined address', async () => {
-      var result = await index.instance(options).xpub.getAddressNext();
-      expect(result).to.eql({
-          code: 422,
-          message: 'invalid xpub'
-      });
-  });
 
    it('should fail with invalid xpub', async () => {
       var result = await index.instance(options).xpub.getAddressNext('xpub');
       expect(result).to.eql({
          code: 422,
-         message: 'invalid xpub'
+         message: 'Request failed with status code 422'
       });
    });
 

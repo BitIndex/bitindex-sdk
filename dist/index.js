@@ -15,7 +15,7 @@ class AddressMethods {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.address_getSummary(addr, callback);
     }
-    getTxs(addr, callback, fromIndex = 0, toIndex = 20, noAsm = true, noScript = true, noSpent = true) {
+    getTransactions(addr, callback, fromIndex = 0, toIndex = 20, noAsm = true, noScript = true, noSpent = true) {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.address_getTxs(addr, fromIndex, toIndex, noAsm, noScript, noSpent, callback);
     }
@@ -153,7 +153,14 @@ class BitIndexSDK {
 }
 exports.default = BitIndexSDK;
 function instance(options) {
-    return new BitIndexSDK(options);
+    const defaultOptions = {
+        api_url: 'https://api.bitindex.network',
+        network: 'main',
+        version_path: 'api/v3',
+        api_key: 'key1' // Set to your API key for xpub and webhook related calls
+    };
+    const mergedOptions = Object.assign({}, defaultOptions, options);
+    return new BitIndexSDK(mergedOptions);
 }
 exports.instance = instance;
 try {
