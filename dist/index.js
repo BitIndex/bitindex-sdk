@@ -157,7 +157,7 @@ function instance(options) {
         api_url: 'https://api.bitindex.network',
         network: 'main',
         version_path: 'api/v3',
-        api_key: 'key1' // Set to your API key for xpub and webhook related calls
+        api_key: '' // Set to your API key for xpub and webhook related calls
     };
     const mergedOptions = Object.assign({}, defaultOptions, options);
     return new BitIndexSDK(mergedOptions);
