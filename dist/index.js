@@ -7,7 +7,7 @@ class AddressMethods {
             this.options = options;
         }
     }
-    getUtxos(addrs, fromIndex = 0, toIndex = 20, callback) {
+    getUtxos(addrs, callback, fromIndex = 0, toIndex = 20) {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.address_getUtxos(addrs, fromIndex, toIndex, callback);
     }
@@ -30,7 +30,7 @@ class XpubMethods {
             this.options = options;
         }
     }
-    getUtxos(xpub, fromIndex = 0, toIndex = 20, callback) {
+    getUtxos(xpub, callback, fromIndex = 0, toIndex = 20) {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.xpub_getUtxos(xpub, fromIndex, toIndex, callback);
     }
@@ -38,7 +38,7 @@ class XpubMethods {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.xpub_getAddressNext(xpub, reserveTime, callback);
     }
-    getAddresses(xpub, fromIndex = 0, toIndex = 20, callback) {
+    getAddresses(xpub, callback, fromIndex = 0, toIndex = 20) {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.xpub_getAddresses(xpub, fromIndex, toIndex, callback);
     }
@@ -46,7 +46,7 @@ class XpubMethods {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.xpub_getStatus(xpub, callback);
     }
-    getTransactions(xpub, fromIndex = 0, toIndex = 20, callback) {
+    getTransactions(xpub, callback, fromIndex = 0, toIndex = 20) {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.xpub_getTransactions(xpub, fromIndex, toIndex, callback);
     }
@@ -139,7 +139,7 @@ const defaultOptions = {
     api_url: 'https://api.bitindex.network',
     network: 'main',
     version_path: 'api/v3',
-    api_key: '' // Set to your API key for xpub and webhook related calls
+    api_key: 'key1' // Set to your API key for xpub and webhook related calls
 };
 class BitIndexSDK {
     constructor(providedOptions) {
