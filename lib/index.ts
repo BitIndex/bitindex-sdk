@@ -8,7 +8,7 @@ class AddressMethods {
     }
   }
 
-  getUtxos(addrs: any[], fromIndex: number = 0, toIndex: number = 20, callback?: Function): Promise<any> {
+  getUtxos(addrs: any[], callback?: Function, fromIndex: number = 0, toIndex: number = 20): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.address_getUtxos(addrs, fromIndex, toIndex, callback);
   }
@@ -36,7 +36,7 @@ class XpubMethods {
     }
   }
 
-  getUtxos(xpub: string, fromIndex: number = 0, toIndex: number = 20, callback?: Function): Promise<any> {
+  getUtxos(xpub:  string, callback?: Function, fromIndex: number = 0, toIndex: number = 20): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.xpub_getUtxos(xpub, fromIndex, toIndex, callback);
   }
@@ -44,7 +44,7 @@ class XpubMethods {
     const apiClient = new APIClient(this.options);
     return apiClient.xpub_getAddressNext(xpub, reserveTime, callback);
   }
-  getAddresses(xpub: string, fromIndex: number = 0, toIndex: number = 20, callback?: Function): Promise<any> {
+  getAddresses(xpub: string,callback?: Function, fromIndex: number = 0, toIndex: number = 20): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.xpub_getAddresses(xpub, fromIndex, toIndex, callback);
   }
@@ -53,7 +53,7 @@ class XpubMethods {
     return apiClient.xpub_getStatus(xpub, callback);
   }
 
-  getTransactions(xpub: string, fromIndex: number = 0, toIndex: number = 20, callback?: Function): Promise<any> {
+  getTransactions(xpub: string, callback?: Function, fromIndex: number = 0, toIndex: number = 20): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.xpub_getTransactions(xpub, fromIndex, toIndex, callback);
   }
