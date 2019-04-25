@@ -60,6 +60,7 @@ https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f
         - [webhook.getConfig](#webhookgetConfig)
         - [webhook.updateMonitoredAddresses](#webhookupdateMonitoredAddresses)
         - [webhook.getMonitoredAddresses](#webhookgetMonitoredAddresses)
+        - [Callback Example](#callback-example)
 
 ## Installation and Usage
 
@@ -784,6 +785,36 @@ var result = await index.instance(options).webhook.getMonitoredAddresses(
         }
     ]
 );
+```
+
+
+#### Callback Example
+
+Notify at the webhook endpoint callback url when an address or child address of an xpub receives a payment.
+
+Callbacks for addresses are received at your configured URL.
+
+Note: You can receive up to multiple callbacks in any order. Make sure to check the 'confirmations' parameter and always use the highest 'confirmations' your application has seen before.
+
+It is possible that old webhooks are in transit with a lower 'confirmations' than what you have received before.
+
+Note: You should be able to rely on payments of 3 confirmations. 
+
+Always check with the > and < operators since it cannot be guaranteed that you will receive a webhook with exactly 3 confirmations (it could be 4, 5 or more).
+
+Sample POST Request Body (Content-Type: application/json)
+```javascript
+{
+    txid: 'e9865ab744ef236f0f436455a439263a53d9708f5eca66625dccb85cf1ff5947',
+    address: '1M6N389jhRi5DQgoQcNir2e2REpYeAYavD',
+    xpub: 'xpub6CYu...',    // Xpub will be present if address is associated with an xpub
+    path: '1/0',            // Path is set if xpub is present
+    satoshis: 1273,
+    confirmations: 3,
+    vout: 0,
+    secret: "secret123key", // Set this secret key above and then compare in your code
+    network: "main", // only main supported for now.
+}
 ```
 
 
