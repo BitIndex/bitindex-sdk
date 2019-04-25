@@ -6,13 +6,13 @@ https://www.bitindex.network
 
 Easily query transactions, addresses, blocks, xpubs and more with a powerful and simple REST API.
 
-
 ## Table of Contents
 * [Installation and Usage](#installation-and-usage)
 * [Prerequisites](#Prerequisites)
 * [What's Included in this SDK](#whats-Included-in-this-SDK)
 * [Endpoints](#endpoints)
 * [Promises vs. Callbacks](#promises-vs-callback)
+* [Browser Examples](https://github.com/BitIndex/bitindex-sdk/tree/master/lib/examples)
 * Operations
     - [Address](#address)
         - [address.getUtxos](#addressgetUtxos)
