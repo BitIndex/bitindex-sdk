@@ -15,6 +15,11 @@ Easily query transactions, addresses, blocks, xpubs and more with a powerful and
 * [Endpoints](#endpoints)
 * [Promises vs. Callbacks](#promises-vs-callback)
 * [Browser Examples](https://github.com/BitIndex/bitindex-sdk/tree/master/lib/examples)
+* [Distribution](https://github.com/BitIndex/bitindex-sdk/tree/master/dist)
+    - [Latest Bundle](https://github.com/BitIndex/bitindex-sdk/blob/master/dist/bundle.min.js)
+    - [Basic Browser Example](https://github.com/BitIndex/bitindex-sdk/blob/master/dist/basic.html)
+    - [Live Browser Example](https://media.bitcoinfiles.org/94dc4e05dc1a1cd87d62e3b1d69b7f0dd15dd7555948849b9ce7e81a9f690993)
+    - [Typescript Definitions](https://github.com/BitIndex/bitindex-sdk/blob/master/dist)
 * Operations
     - [Address](#address)
         - [address.getUtxos](#addressgetUtxos)
