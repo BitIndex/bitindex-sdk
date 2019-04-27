@@ -1,0 +1,1658 @@
+swagger: '2.0'
+info:
+  version: '3.0'
+  title: "BitIndex API v3"
+  description: |
+    [BitIndex](https://www.bitindex.network) is a Bitcoin SV blockchain API for developers.
+
+    Easily query transactions, addresses, blocks, xpubs and more with a powerful and simple REST API.
+
+    **What's new in API v3:**
+      - 100% Insight-API compatibility
+      - Ability to reserve xpub child addresses with *reserveTime* query param
+      - [Javascript SDK](https://www.github.com/bitindex/bitindex-sdk) released
+
+    ##### Feature Overview
+      - Query transactions, addresses, blocks and xpub keys
+      - Send transactions
+      - Insight API compatibility
+      - On chain data and file access (OP_RETURN support)
+      - Webhooks
+
+    ##### Performance Characteristics
+      - Handles 128MB blocks and re-orgs efficiently
+      - Real-time updates (< 2 seconds)
+      - Roadmap to scale to 2 GB sized blocks by July 2019
+
+    ### Javascript SDK
+
+    https://github.com/BitIndex/bitindex-sdk
+
+    ### Authentication
+
+    **NOTE:** *Only webhooks and xpub related API calls require authentication.*
+
+    Get your API credentials at https://www.bitindex.network with 'Get API Key' to generate a new key.
+
+    ----
+
+    The params `api_key` must be passed in
+    as URL query params or HTTP headers.
+
+    *URL query params:*
+
+    GET https://api.bitindex.network/api/v3/main/xpub/balance?xpub=xpub123&api_key=YOUR_API_KEY
+
+    *HTTP headers:*
+
+    api_key: YOUR_API_KEY
+
+    GET https://api.bitindex.network/api/v3/main/xpub/balance?xpub=xpub123
+
+    #### Contact
+
+    Contact us for feedback and questions, we love to hear your feedback.
+
+    [@BitIndexNetwork](https://www.twitter.com/BitIndexNetwork)
+
+    [bitindex@protonmail.com](mailto:bitindex@protonmail.com)
+
+host: api.bitindex.network
+basePath: /api/v3
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+
+securityDefinitions:
+  api_key:
+    type: apiKey
+    in: header
+    name: api_key
+    description: API key for your account (Only needed for xpub and webhook related API calls)
+
+paths:
+
+
+  /{network}/addr/{address}/utxo:
+    get:
+      summary: Address - Get utxos for address (Insight API Compatible)
+      description: Retrieve utxos for address
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: address
+          type: string
+          description: Address to get utxos for
+          required: true
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AddressUtxoDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Address
+
+  /{network}/addr/{address}:
+    get:
+      summary: Address - Get address balances and transaction summary (Insight API Compatible)
+      description: Get address balances and transaction summary
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: address
+          type: string
+          description: Address
+          required: true
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AddressStatusDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Address
+
+  /{network}/addrs/txs:
+    post:
+      summary: Address - Get transactions (Insight API Compatible)
+      description: Retrieve transactions for address
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: body
+          name: addrs
+          description: Addrs to get utxos for
+          schema:
+            $ref: '#/definitions/AddrsTxsDefinition'
+
+
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AddrsTxResponseDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Address
+
+  /{network}/addrs/utxo:
+    post:
+      summary: Address - Get utxos for addresses (Insight API Compatible)
+      description: |
+        This API method is provided for convenience and is compatible with applications that use
+        the [Insight API](https://github.com/bitpay/insight-api) payload formats.
+
+        `POST /addrs/utxo`
+
+        `Content-type: application/json`
+
+        **Body:**
+        ```
+        {
+          "addrs": "1B7FeGkfqDyPFmX33RWMCzmKKWjat5zYos"
+        }
+        ```
+
+        **Response**:
+        ```
+        [
+          {
+            "address": "1FWnjNALkVNKL424NV4yQt3eQ8cKRdm28w",
+            "txid": "24bf8e894be5f3123707d079a13294503542ec9831ec41c2bec25c3a8e701e87",
+            "value": 23000,
+            "satoshis": 23000,
+            "amount": 0.00023,
+            "height": 567292,
+            "confirmations": 3
+          }
+        ]
+        ```
+
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: body
+          name: addrs
+          description: Addrs to get utxos for
+          schema:
+            $ref: '#/definitions/AddrsDefinition'
+        - in: query
+          name: sort
+          required: false
+          type: string
+          default: false
+          description: Format is 'field:asc' such as 'value:desc' to sort by value descending
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AddressUtxoDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+
+      tags:
+        - Address
+
+
+
+  /{network}/tx/send:
+    post:
+      summary: Send Transaction (Insight API)
+      description: |
+
+        This API method is provided for convenience and is compatible with applications that use
+        the [Insight API](https://github.com/bitpay/insight-api) payload formats.
+
+        `POST /api/tx/send`
+
+        `Content-type: application/json`
+
+        **Body:**
+        ```
+        {
+          "rawtx": "0100000001b5a3b04a5d4469d..."
+        }
+        ```
+
+        **Response**:
+        ```
+        {
+          "txid": "f9949bf6b1502a76716160568b350e80d8dca9f58ed9f68d969445d4ab0a3b5"
+        }
+        ```
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: body
+          name: rawtx
+          description: Raw transaction hex
+          schema:
+            $ref: '#/definitions/RawtxDefinition'
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            $ref: '#/definitions/TxidDefinition'
+        500:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Transaction
+  /{network}/tx/{txid}:
+    get:
+      summary: Get single transaction (Insight-API compatible)
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: txid
+          type: string
+          required: true
+          description: txid of transaction to get
+
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                $ref: '#/definitions/FullTransactionDefinition'
+        404:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+        500:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Transaction
+
+  /{network}/rawtx/{txid}:
+    get:
+      summary: Get Raw tx (Insight-API)
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: txid
+          required: true
+          type: string
+          description: Tx id
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            $ref: '#/definitions/RawtxDefinition'
+      tags:
+        - Transaction
+
+  /{network}/status:
+    get:
+      summary: Get the status (Insight-API)
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: query
+          name: q
+          required: false
+          type: string
+          description: getInfo, getDifficulty, getBestBlockHash, getLastBlockHash
+
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            $ref: '#/definitions/InsightStatusDefinition'
+      tags:
+        - Chain Info
+
+
+  /{network}/block-index/{height}:
+    get:
+      summary: Get Block Hash by Height (Insight-API)
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: height
+          required: true
+          type: number
+          description: Block Height
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            $ref: '#/definitions/BlockIndexDefinition'
+      tags:
+        - Block
+  /{network}/block/{blockhash}:
+    get:
+      summary: Get Block (Insight-API)
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: blockhash
+          required: true
+          type: string
+          description: Block hash
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            $ref: '#/definitions/BlockDefinition'
+      tags:
+        - Block
+
+  /{network}/rawblock/{blockhash}:
+    get:
+      summary: Get Raw Block (Insight-API)
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: blockhash
+          required: true
+          type: string
+          description: Block hash
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            $ref: '#/definitions/RawBlockDefinition'
+      tags:
+        - Block
+
+  /{network}/xpub/{xpub}/addrs/next:
+    get:
+      summary: Xpub - Get next unused address
+      description: |
+        Get next unused address pair for xpub (chains 0 and 1)
+
+        **Example 1:** Get next address
+
+        GET /xpub/xpub.../addrs/next
+
+        **Example 2:** Get next address and reserve it for 1 hour
+
+        Subsequent calls will return the next available address.
+
+        GET /xpub/xpub.../addrs/next?reserveTime=3600
+
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: xpub
+          required: true
+          type: string
+          description: xpub to query utxos
+        - in: query
+          name: reserveTime
+          required: false
+          type: integer
+          format: int32
+          minimum: 0
+          description: Time in seconds to reserve xpub before it will be handed out again (optional)
+      security:
+        - api_key: []
+
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/AddressPairReservation'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Xpub
+  /{network}/xpub/{xpub}/addrs:
+    get:
+      summary: Xpub - Get xpub addresses
+      description: |
+        Get addresses for xpub
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: xpub
+          required: true
+          type: string
+          description: xpub to query utxos
+        - in: query
+          name: offset
+          required: false
+          type: integer
+          format: int32
+          minimum: 0
+          default: 0
+          description: Pagination offset
+        - in: query
+          name: limit
+          required: false
+          type: integer
+          format: int32
+          minimum: 1
+          default: 1000
+          description: Pagination size
+        - in: query
+          name: order
+          required: false
+          type: string
+          default: 'desc'
+          description: Sort order. 'asc' or 'desc'
+        - in: query
+          name: address
+          required: false
+          type: string
+          description: Filter by a specific address in the xpub
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                $ref: '#/definitions/XpubAddressesDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Xpub
+  /{network}/xpub/{xpub}/status:
+    get:
+      summary: Xpub - Get status and balance for xpub
+      description: |
+        Get status and balance for xpub
+
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: xpub
+          required: true
+          type: string
+          description: xpub to query utxos
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                $ref: '#/definitions/XpubStatusBalancesDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Xpub
+  /{network}/xpub/{xpub}/utxo:
+    get:
+      summary: Xpub - Get utxos for xpub
+      description: |
+        Get utxos for xpub
+
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: xpub
+          required: true
+          type: string
+          description: xpub to query utxos
+        - in: query
+          name: sort
+          required: false
+          type: string
+          default: false
+          description: Format is 'field:asc' such as 'value:desc' to sort by value descending
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/XpubAddressUtxoDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Xpub
+
+  /{network}/xpub/{xpub}/txs:
+    get:
+      summary: Xpub - Get transaction history for xpub
+      description: |
+        Get transaction history for xpub
+
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: path
+          name: xpub
+          required: true
+          type: string
+          description: xpub to query utxos
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/XpubAddressTxSummaryDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Xpub
+
+  /{network}/webhook/endpoint:
+    get:
+      summary: Webhooks - Get webhook config
+      description: |
+        Get the configured webhook endpoint
+
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/WebhookEndpointDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Webhooks
+    put:
+      summary: Webhooks - Update webhook endpoint config
+      description: Update webhook endpoint confirmation
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: body
+          name: webhook_endpoint
+          description: webhook endpoint configuration
+          schema:
+            $ref: '#/definitions/WebhookEndpointDefinition'
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/WebhookEndpointDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Webhooks
+
+  /{network}/webhook/monitored_addrs:
+    get:
+      summary: Get monitored addresses and xpubs
+      description: |
+        Get monitored addresses and xpubs
+
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+      security:
+        - api_key: []
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/WebhookMonitoredAddressesDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Webhooks
+
+    put:
+      summary: Update monitored addresses and xpubs
+      description: Update monitored addresses and xpubs
+      parameters:
+        - in: path
+          name: network
+          required: true
+          type: string
+          description: main, test, or stn
+        - in: body
+          name: monitored_addrs
+          required: true
+          schema:
+              type: array
+              items:
+                $ref: '#/definitions/WebhookMonitoredAddressesDefinition'
+      responses:
+        200:
+          description: Successful Response
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/WebhookMonitoredAddressesDefinition'
+        422:
+          description: Failure Response
+          schema:
+            type: object
+            $ref: '#/definitions/GenericApiErrorResponse'
+      tags:
+        - Webhooks
+
+  /webhook/sample_callback:
+    post:
+      summary: Sample callback for webhook
+      description: |
+        Notify at the webhook endpoint callback url when an address or child address of an xpub receives a payment
+
+        Callbacks for addresses are received at your configured URL.
+
+        Note: You can receive up to multiple callbacks in any order. Make sure to check the 'confirmations' parameter and always use the highest 'confirmations' your application has seen before.
+
+        It is possible that old webhooks are in transit with a lower 'confirmations' than what you have received before.
+
+        Note: You should be able to rely on payments of 3 confirmations. Always check with the > and < operators since it cannot be guaranteed that you will receive a webhook with exactly _3 confirmations_ (it could be 4, 5 or more).
+
+        #### Sample POST Request Body (`Content-Type: application/json`)
+        ```
+        {
+            txid: 'e9865ab744ef236f0f436455a439263a53d9708f5eca66625dccb85cf1ff5947',
+            address: '1M6N389jhRi5DQgoQcNir2e2REpYeAYavD',
+            xpub: 'xpub6CYu...',    // Xpub will be present if address is associated with an xpub
+            path: '1/0',            // Path is set if xpub is present
+            satoshis: 1273,
+            confirmations: 3,
+            vout: 0,
+            secret: "secret123key", // Set this secret key above and then compare in your code
+            network: "main", // only main supported for now.
+        }
+        ```
+
+      parameters:
+        - in: body
+          name: payload
+          description: webhook callback payload
+          schema:
+            $ref: '#/definitions/WebhookPayloadCallbackDefinition'
+
+      responses:
+        200:
+          description: Successful Response must be returned to not receive callback again
+
+      tags:
+        - Webhooks
+
+definitions:
+
+  WebhookPayloadCallbackDefinition:
+    title: Webhook callback payload POST format
+    description: |
+     Webhook callback payload POST format
+    type: object
+    properties:
+      txid:
+        type: string
+      address:
+        type: string
+      xpub:
+        type: string
+      path:
+        type: string
+      satoshis:
+        type: string
+        format: int64
+        minimum: 1
+      confirmations:
+        type: integer
+        format: int32
+        minimum: 0
+      vout:
+        type: integer
+        format: int32
+        minimum: 0
+      secret:
+        type: string
+      network:
+        type: string
+
+    required:
+      - txid
+      - address
+      - satoshis
+      - confirmations
+      - vout
+      - secret
+      - network
+
+  WebhookMonitoredAddressesDefinition:
+    title: Webhook Monitored Addresses
+    description: |
+     Webhook Monitored Addresses
+    type: object
+    properties:
+      addr:
+        type: string
+        description: Address or xpub key to track and monitor
+
+    required:
+      - addr
+  WebhookEndpointDefinition:
+    title: Webhook Endpoint
+    description: Webhook Endpoint
+    type: object
+    properties:
+      url:
+        type: string
+        description: Url to callback when monitored address or xpub has a pyament
+      enabled:
+        type: boolean
+        description: Whether webhooks are enabled or disabled
+      secret:
+        type: string
+        description: Secret parameter passed back to your API for security purposes
+    required:
+      - url
+      - enabled
+      - secret
+
+  PaymentTransactionNotifyCallback:
+    title: Payment Transaction notification callback (Coming soon)
+    description: Callback when new Payment Transaction detected
+    type: object
+    properties:
+      address:
+        type: string
+        description: Address received payment transaction
+      chain:
+        type: number
+        minimum: 0
+        description: Optional, returned only if associated with xpub. BIP32 account chain for receive address (chain=0) or change address(chain=1)
+      num:
+        type: integer
+        format: int64
+        minimum: 0
+        description: Optional, returned only if associated with xpub. BIP32 child wallet index
+      xpub:
+        type: string
+        description: Optional, returned only if associated with xpub.
+      txid:
+        type: string
+      value:
+        type: integer
+        format: int64
+      satoshis:
+        type: integer
+        format: int64
+      amount:
+        type: number
+        format: float
+      height:
+        type: integer
+        format: int64
+        minimum: 0
+        description: 0 = mempool
+      confirmations:
+        type: integer
+        format: int64
+        minimum: 0
+        description: 0 = mempool. Sends up to 4 confirmations.
+    required:
+      - address
+      - txid
+      - value
+      - amount
+      - satoshis
+      - height
+      - confirmations
+
+  AddressPairReservation:
+    title: address pair reservation
+    description: address pair reservation
+    type: object
+    properties:
+      address:
+        type: string
+      chain:
+        type: number
+        minimum: 0
+      num:
+        type: integer
+        format: int64
+        minimum: 0
+    required:
+      - num
+      - chain
+      - address
+
+  BlockDefinition:
+    title: Block
+    description: Get Block data
+    type: object
+    properties:
+      hash:
+        type: string
+      confirmations:
+        type: integer
+        format: int64
+      size:
+        type: integer
+        format: int64
+        minimum: 0
+      height:
+        type: integer
+        format: int64
+        minimum: 0
+      version:
+        type: integer
+        format: int64
+        minimum: 0
+      versionHex:
+        type: string
+      merkleroot:
+        type: string
+      tx:
+        type: array
+        items:
+          type: string
+      time:
+        type: integer
+        format: int64
+        minimum: 0
+      mediantime:
+        type: integer
+        format: int64
+        minimum: 0
+      nonce:
+        type: integer
+        format: int64
+        minimum: 0
+      bits:
+        type: string
+      difficulty:
+        type: number
+      chainwork:
+        type: string
+      previousblockhash:
+        type: string
+      nextblockhash:
+        type: string
+
+  RawTxDefinition:
+    title: Raw Tx
+    description: Get Raw Tx data
+    type: object
+    properties:
+      rawtx:
+        type: string
+
+  RawBlockDefinition:
+    title: Raw Block
+    description: Get Raw Block data
+    type: object
+    properties:
+      rawblock:
+        type: string
+
+  BlockIndexDefinition:
+    title: Block Index Defintion
+    description: Get Hash by Height
+    type: object
+    properties:
+      blockHash:
+        type: string
+
+  InsightStatusDefinition:
+    title: Insight Status
+    description: Get Insight Status. Either getInfo, getDifficulty, getBestBlockHash, getLastBlockHash
+    type: object
+    properties:
+      lastblockHash:
+        type: string
+      bestblockHash:
+        type: string
+      difficulty:
+        type: number
+        minimum: 0
+      info:
+        type: object
+        $ref: '#/definitions/GetInfoDefinition'
+
+  GetInfoDefinition:
+    title: Get Info
+    description: Get Info
+    type: object
+    properties:
+      version:
+        type: integer
+        format: int64
+        minimum: 0
+      protocolversion:
+        type: integer
+        format: int64
+        minimum: 0
+      block:
+        type: integer
+        format: int64
+        minimum: 0
+      timeoffset:
+        type: integer
+        format: int64
+      connection:
+        type: integer
+        format: int64
+        minimum: 0
+      proxy:
+        type: string
+      difficulty:
+        type: number
+        minimum: 0
+      testnet:
+        type: boolean
+      relayfee:
+        type: number
+        minimum: 0
+      errors:
+        type: string
+      network:
+        type: string
+    required:
+      - version
+      - protocolversion
+      - block
+      - timeoffset
+      - connection
+      - proxy
+      - difficulty
+      - testnet
+      - relayfee
+      - errors
+      - network
+
+  AddrsTxResponseDefinition:
+    title: Address tx definition
+    description: xAddress tx definition
+    type: object
+    properties:
+      totalItems:
+        type: integer
+        format: int32
+        minimum: 0
+      from:
+        type: integer
+        format: int32
+        minimum: 0
+      to:
+        type: integer
+        format: int32
+        minimum: 0
+      items:
+        type: array
+        items:
+          type: object
+
+    required:
+      - items
+
+  XpubAddressesDefinition:
+    title: xpub address description
+    description: xpub address description that summarizes an address for an xpub
+    type: object
+    properties:
+      address:
+        type: string
+      path:
+        type: string
+      chain:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 1
+        description: Wallet 'chain' number as defined in bip32
+      num:
+        type: integer
+        format: int64
+        minimum: 0
+        description: Wallet 'address' number under 'wallet chain' as defined in bip32
+    required:
+      - address
+      - num
+      - chain
+      - path
+
+  XpubStatusBalancesDefinition:
+    title: Xpub Balances
+    type: object
+    properties:
+      confirmed:
+        type: integer
+        format: int64
+        minimum: 0
+      unconfirmed:
+        type: integer
+        format: int64
+        minimum: 0
+    required:
+      - confirmed
+      - unconfirmed
+  BalancesDefinition:
+    title: Balances
+    type: object
+    properties:
+      address:
+        type: string
+      confirmed:
+        type: integer
+        format: int64
+        minimum: 0
+      unconfirmed:
+        type: integer
+        format: int64
+        minimum: 0
+    required:
+      - address
+      - confirmed
+      - unconfirmed
+
+  AddressUtxoDefinition:
+    title: Address Utxo
+    description: Unspent utxo for address
+    type: object
+    properties:
+      address:
+        type: string
+      txid:
+        type: string
+      vout:
+        type: integer
+        format: int32
+        minimum: 0
+      value:
+        type: integer
+        format: int64
+        minimum: 0
+      satoshis:
+        type: integer
+        format: int64
+        minimum: 0
+      amount:
+        type: number
+        format: float
+        minimum: 0
+      height:
+        type: integer
+        format: int32
+        minimum: 0
+      confirmations:
+        type: integer
+        format: int32
+        minimum: 0
+      scriptPubKey:
+        type: string
+
+    required:
+      - address
+      - txid
+      - vout
+      - value
+      - height
+      - confirmations
+      - scriptPubKey
+
+  XpubAddressUtxoDefinition:
+    title: Xpub Utxo
+    description: Unspent utxo for xpub
+    type: object
+    properties:
+      address:
+        type: string
+      num:
+        type: integer
+        format: int32
+        minimum: 0
+        description: Applies to xpub addresses only. This is the wallet 'address' number under the 'wallet chain' as defined in bip32.
+      chain:
+        type: integer
+        format: int32
+        minimum: 0
+        description: Applies to xpub addresses only. Wallet 'chain' number as defined in bip32.
+      txid:
+        type: string
+      path:
+        type: string
+      vout:
+        type: integer
+        format: int32
+        minimum: 0
+      value:
+        type: integer
+        format: int64
+        minimum: 0
+      satoshis:
+        type: integer
+        format: int64
+        minimum: 0
+      amount:
+        type: number
+        format: float
+        minimum: 0
+
+      height:
+        type: integer
+        format: int32
+        minimum: 0
+    required:
+      - num
+      - chain
+      - address
+      - txid
+      - vout
+      - path
+      - value
+      - satoshis
+      - amount
+      - height
+
+  AddressStatusDefinition:
+    title: address status
+    description: addresss status
+    type: object
+    properties:
+      addrStr:
+        type: string
+        description: address
+        example: 15ES6BBymPDMYqKHEak2rpwyRHazFaBi67
+      balance:
+        type: number
+        format: double
+        minimum: 0
+      balanceSat:
+        type: integer
+        format: int64
+        minimum: 0
+      totalReceived:
+        type: number
+        format: double
+        minimum: 0
+      totalReceivedSat:
+        type: integer
+        format: int64
+        minimum: 0
+      totalSent:
+        type: number
+        format: double
+        minimum: 0
+      totalSentSat:
+        type: integer
+        format: int64
+        minimum: 0
+      unconfirmedBalance:
+        type: number
+        format: double
+        minimum: 0
+      unconfirmedBalanceSat:
+        type: integer
+        format: int64
+        minimum: 0
+      unconfirmedTxApperances:
+        type: integer
+        format: int64
+        minimum: 0
+      txApperances:
+        type: integer
+        format: int64
+        minimum: 0
+      transactions:
+        type: array
+        items:
+          type: string
+
+    required:
+      - addrStr
+      - balance
+      - balanceSat
+      - totalReceived
+      - totalReceivedSat
+      - totalSent
+      - totalSentSat
+      - unconfirmedBalance
+      - unconfirmedBalanceSat
+      - unconfirmedTxApperances
+      - transactions
+
+  XpubStatusDefinition:
+    title: xpub status
+    description: Status of xpub registration. Valid states 'registering', 'ready'
+    type: object
+    properties:
+      xpub:
+        type: string
+      status:
+        type: string
+        description: Whether xpub is ready to be used or still registering
+      maxUsedAddressNum:
+        type: integer
+        format: int32
+        minimum: 0
+        description: Highest used address index number for the xpub
+      cachedAddressCount:
+        type: integer
+        format: int32
+        minimum: 0
+        description: Number of cached addresses for the xpub
+    required:
+      - xpub
+      - status
+      - maxUsedAddressNum
+      - cachedAddressCount
+
+  AddressTxSummaryDefinition:
+    title: Transaction summary definition
+    type: object
+    properties:
+      address:
+        type: string
+      txid:
+        type: string
+      height:
+        type: string
+    required:
+      - address
+      - txid
+      - height
+
+  XpubAddressTxSummaryDefinition:
+    title: Xpub Address Transaction Summary Record
+    type: object
+    properties:
+      address:
+        type: string
+      num:
+        type: integer
+        format: int32
+        minimum: 0
+        description: Applies to xpub addresses only. This is the wallet 'address' number under the 'wallet chain' as defined in bip32.
+      chain:
+        type: integer
+        format: int32
+        minimum: 0
+        description: Applies to xpub addresses only. Wallet 'chain' number as defined in bip32.
+      path:
+        type: string
+      txid:
+        type: string
+      height:
+        type: integer
+        format: int32
+        minimum: 0
+    required:
+      - address
+      - num
+      - chain
+      - txid
+      - height
+      - path
+
+  AddressTxsDefinition:
+    title: Address Transactions
+    type: object
+    properties:
+      address:
+        type: string
+      txs:
+        type: array
+        items:
+          type: object
+          properties:
+            txid:
+              type: string
+            height:
+              type: string
+          required:
+            - txid
+            - height
+    required:
+      - address
+
+  HexDefinition:
+    title: Hex payload for transaction
+    type: object
+    properties:
+      hex:
+        type: string
+    required:
+      - hex
+  RawtxDefinition:
+    title: Rawtx payload for transaction
+    type: object
+    properties:
+      rawtx:
+        type: string
+    required:
+      - rawtx
+
+  AddrsTxsDefinition:
+    title: Addrs Txs payload for getting address transactions
+    type: object
+    properties:
+      addrs:
+        type: string
+      fromIndex:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+      toIndex:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+      noAsm:
+        type: boolean
+        default: true
+      noScript:
+        type: boolean
+        default: true
+      noSpent:
+        type: boolean
+        default: true
+
+    required:
+      - addrs
+  AddrsDefinition:
+    title: Addrs payload for querying utxos for address
+    type: object
+    properties:
+      addrs:
+        type: string
+    required:
+      - addrs
+
+  TxidDefinition:
+    title: Txid payload for transaction
+    type: object
+    properties:
+      txid:
+        type: string
+    required:
+      - txid
+  FullTransactionDefinition:
+    title: Full transaction definition
+    type: object
+    properties:
+      txid:
+        type: string
+      hash:
+        type: string
+      hex:
+        type: string
+      size:
+        type: integer
+        format: int32
+      version:
+        type: integer
+        format: int32
+      locktime:
+        type: integer
+        format: int32
+      vin:
+        type: array
+        items:
+          type: object
+          properties:
+            txid:
+              type: string
+            vout:
+              type: integer
+              format: int32
+            scriptSig:
+              type: object
+              properties:
+                asm:
+                  type: string
+                hex:
+                  type: string
+            sequence:
+              type: integer
+              format: int64
+            coinbase:
+                type: string
+
+      vout:
+        type: array
+        items:
+          type: object
+          properties:
+            value:
+              type: string
+            n:
+              type: integer
+              format: int32
+            scriptSig:
+              type: object
+              properties:
+                asm:
+                  type: string
+                hex:
+                  type: string
+                reqSigs:
+                  type: integer
+                  format: int32
+                type:
+                  type: string
+                addresses:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - asm
+                - hex
+                - reqSigs
+                - type
+                - addresses
+          required:
+            - value
+            - n
+            - scriptSig
+      blockhash:
+        type: string
+      confirmations:
+        type: integer
+        format: int32
+      time:
+        type: integer
+        format: int64
+      blocktime:
+        type: integer
+        format: int64
+    required:
+      - txid
+      - hex
+      - hash
+      - size
+      - version
+      - locktime
+      - vin
+
+  GenericApiErrorResponse:
+    title: api error response
+    description: api error response
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    required:
+      - code
+      - message
+

@@ -107,12 +107,16 @@ The Insight-API compatibile methods are indicated with a comment.
 
 Endpoints:
 - https://api.bitindex.network/api/v3/main (Mainnet)
-- https://api.bitindex.network/api/v3/test (Testnet - coming soon!)
+- https://api.bitindex.network/api/v3/test (Testnet)
 - https://api.bitindex.network/api/v3/stn (Scaling Testnet - coming soon!)
 
-Example call to get a transaction on 'Mainnet':
+Example get a transaction on 'Mainnet':
 
 https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6
+
+Example get a transaction on 'Testnet':
+
+https://api.bitindex.network/api/v3/test/tx/0849b19c494ffe2d74fe4a7930f11e74a3ad10607f47e61bc06a892f89bcee67
 
 
 ### Promises vs. Callback
@@ -798,7 +802,7 @@ Note: You can receive up to multiple callbacks in any order. Make sure to check 
 
 It is possible that old webhooks are in transit with a lower 'confirmations' than what you have received before.
 
-Note: You should be able to rely on payments of 3 confirmations. 
+Note: You should be able to rely on payments of 3 confirmations.
 
 Always check with the > and < operators since it cannot be guaranteed that you will receive a webhook with exactly 3 confirmations (it could be 4, 5 or more).
 
