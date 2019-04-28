@@ -14,9 +14,19 @@ BitIndex is a powerful Bitcoin SV blockchain API built for developers.
 
 Easily query balances, utxos, and transactions.
 
+Mainnet:
+
 https://api.bitindex.network/api/v3/main/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX
 https://api.bitindex.network/api/v3/main/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX/utxo
 https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6
+
+Testnet:
+
+https://api.bitindex.network/api/v3/test/addr/mw72ykErwcQoHnRwabNwoR7iqgFw4ZCzkV
+https://api.bitindex.network/api/v3/test/addr/mw72ykErwcQoHnRwabNwoR7iqgFw4ZCzkV/utxo
+https://api.bitindex.network/api/v3/test/tx/2cb32f8816f47f072fae8bbe506fe39ed9e81c7ecee65fae2d5a40cd299f557e
+
+STN (Coming soon)
 
 ---
 ## Table of Contents
