@@ -26,7 +26,11 @@ https://api.bitindex.network/api/v3/test/addr/mw72ykErwcQoHnRwabNwoR7iqgFw4ZCzkV
 https://api.bitindex.network/api/v3/test/addr/mw72ykErwcQoHnRwabNwoR7iqgFw4ZCzkV/utxo
 https://api.bitindex.network/api/v3/test/tx/2cb32f8816f47f072fae8bbe506fe39ed9e81c7ecee65fae2d5a40cd299f557e
 
-STN (Coming soon)
+STN
+
+https://api.bitindex.network/api/v3/stn/addr/n4ioKcJWq8LwxMCyUGSyk8H8MMrMKVCKmK
+https://api.bitindex.network/api/v3/stn/addr/n4ioKcJWq8LwxMCyUGSyk8H8MMrMKVCKmK/utxo
+https://api.bitindex.network/api/v3/stn/tx/1a31edadbfa73702c0768ceace77ba6000cd91d705f3a0030be98bd9a1bcd027
 
 ---
 ## Table of Contents
@@ -118,7 +122,7 @@ The Insight-API compatibile methods are indicated with a comment.
 Endpoints:
 - https://api.bitindex.network/api/v3/main (Mainnet)
 - https://api.bitindex.network/api/v3/test (Testnet)
-- https://api.bitindex.network/api/v3/stn (Scaling Testnet - coming soon!)
+- https://api.bitindex.network/api/v3/stn (Scaling Testnet - STN)
 
 Example get a transaction on 'Mainnet':
 
@@ -127,6 +131,10 @@ https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f
 Example get a transaction on 'Testnet':
 
 https://api.bitindex.network/api/v3/test/tx/0849b19c494ffe2d74fe4a7930f11e74a3ad10607f47e61bc06a892f89bcee67
+
+Example get a transaction on 'Scaling Testnet (STN)':
+
+https://api.bitindex.network/api/v3/stn/tx/d677e2a67fd960cf85489a365bbdc3b5e5de2ccc91f7552d096ccebfaf3e584f
 
 
 ### Promises vs. Callback
