@@ -1,3 +1,4 @@
+Note: BitIndex is now part of [MatterCloud](https://www.MatterCloud.net).
 # BitIndex Javascript SDK
 https://www.bitindex.network
 
