@@ -1,6 +1,6 @@
 {
   "name": "bitindex-sdk",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "BitIndex Javascript SDK - https://www.bitindex.network",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,8 +13,8 @@
     "type": "git",
     "url": "git+https://github.com/BitIndex/bitindex-sdk.git"
   },
-  "author": "BitIndex 2019",
-  "license": "ISC",
+  "author": "Attila Aros 2019",
+  "license": "Open BSV",
   "bugs": {
     "url": "https://github.com/BitIndex/bitindex-sdk/issues"
   },
