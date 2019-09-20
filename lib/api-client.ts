@@ -8,7 +8,7 @@ export interface BitIndexApiClientOptions {
 }
 
 const defaultOptions: BitIndexApiClientOptions = {
-    api_url: 'https://api.bitindex.network',
+    api_url: 'http://ec2-54-214-118-47.us-west-2.compute.amazonaws.com',
     // api_key: 'your api key ', // Get a key at www.bitindex.network
     network: 'main', // 'test', or 'stn'
     version_path: 'api/v3',
@@ -149,6 +149,29 @@ export class APIClient {
                     enabled,
                     secret
                 },
+                {
+                    headers: { }
+                }
+            ).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, {
+                    code: ex.response.status,
+                    message: ex.message ? ex.message : ex.toString()
+                }, callback)
+            })
+        });
+    }
+
+    blockheader(blockhash: string, callback?: Function): Promise<any> {
+        return new Promise((resolve, reject) => {
+             if (!blockhash || /^(\s*)$/.test(blockhash)) {
+                this.callbackAndResolve(resolve, {
+                    code: 422,
+                    message: 'blockhash required'
+                }, callback);
+            }
+            axios.get(this.fullUrl + `/blockheader/${blockhash}`,
                 {
                     headers: { }
                 }
@@ -578,6 +601,68 @@ export class APIClient {
         });
     }
 
+    address_getTxsOptions(address: any,
+        options?: {
+            fromIndex?: number,
+            toIndex?: number,
+            afterHeight?: number,
+            afterBlockHash?: string,
+            includeAsm?: boolean,
+            includeHex?: boolean
+        },
+        callback?: Function): Promise<any> {
+
+            if (!this.isStringOrNonEmptyArray(address)) {
+            return new Promise((resolve, reject) => {
+                this.callbackAndResolve(resolve, {
+                    message: 'address required'
+                }, callback)
+            });
+        }
+        let addrs: string[] = [];
+        if (!Array.isArray(address)) {
+            addrs.push(address);
+        } else {
+            addrs = address;
+        }
+
+        return new Promise((resolve, reject) => {
+
+            let payload: any = {
+                addrs: Array.isArray(addrs) ? addrs.join(',') : addrs
+            };
+
+            if (options && options.fromIndex) {
+                payload.fromIndex = options.fromIndex;
+            }
+            if (options && options.toIndex) {
+                payload.toIndex = options.toIndex;
+            }
+
+            if (options && options.includeAsm) {
+                payload.includeAsm = options.includeAsm;
+            }
+
+            if (options && options.includeHex) {
+                payload.includeHex = options.includeHex;
+            }
+
+            axios.post(this.fullUrl + `/addrs/txs`,
+                payload,
+                {
+                    headers: { }
+                }
+            ).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, {
+                    code: ex.response.status,
+                    message: ex.message ? ex.message : ex.toString()
+                }, callback)
+            })
+        });
+    }
+
     address_getTxs(address: any, fromIndex: number = 0, toIndex: number = 20, noAsm: boolean = true, noScript: boolean = true, noSpent: boolean = true, callback?: Function): Promise<any> {
         if (!this.isStringOrNonEmptyArray(address)) {
             return new Promise((resolve, reject) => {
@@ -614,7 +699,7 @@ export class APIClient {
                 payload.noScript = noScript;
             }
             if (noSpent) {
-                payload.toIndex = noSpent;
+                payload.noSpent = noSpent;
             }
 
             axios.post(this.options.api_url + `/api/addrs/txs`,

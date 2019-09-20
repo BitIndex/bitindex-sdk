@@ -464,12 +464,40 @@ var result = await bitindex.chaininfo.difficulty();
 
 ### Block
 
-#### block.getByBlockHash
+#### block.getBlockHeaderByBlockHash
 
-Get block by hash
+Get blockheader by hash. This dooes not return the txids in the block, for faster performance.
+If you want the txids, then use `block.getByBlockHash`
 
 ```javascript
-var result = await bitindex.chaininfo.getByBlockHash('000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52');
+var result = await bitindex.block.getBlockHeaderByBlockHash('000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52');
+
+/*
+{
+    hash: '000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52',
+    confirmations: 10,
+    height: 575870,
+    version: 549453824,
+    versionHex: '20c00000',
+    merkleroot: '5eff2b149295b0010548910fc158664ee36f26781fbaceb42e71d924fac725c4',
+    time: 1553919636,
+    mediantime: 1553915823,
+    nonce: 1390191648,
+    bits: '180beac2',
+    difficulty: 92262545584.60136,
+    chainwork: '000000000000000000000000000000000000000000de4ca83d16db8a005b4264',
+    previousblockhash: '000000000000000008db5e402d1045c27de3d11a77c2ac7c420838c1b67df725',
+    nextblockhash: '0000000000000000046c026c285ed7bc7ba7998f90938eb160c0f69b21dbdf2b'
+}
+*/
+```
+
+#### block.getByBlockHash
+
+Get block by hash. Warning: If you do not need the txids, then use block.getBlockHeaderByBlockHash because it is much faster to load.
+
+```javascript
+var result = await bitindex.block.getByBlockHash('000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52');
 
 /*
 {
@@ -507,7 +535,7 @@ var result = await bitindex.chaininfo.getByBlockHash('000000000000000006c4ca331e
 Get raw block by hash
 
 ```javascript
-var result = await bitindex.chaininfo.getByBlockHashRaw('000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52');
+var result = await bitindex.block.getByBlockHashRaw('000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52');
 
 /*
 {
@@ -521,7 +549,7 @@ var result = await bitindex.chaininfo.getByBlockHashRaw('000000000000000006c4ca3
 Get raw block by hash
 
 ```javascript
-var result = await bitindex.chaininfo.getBlockHashByIndex('575870');
+var result = await bitindex.block.getBlockHashByIndex('575870');
 
 /*
 {

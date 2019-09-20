@@ -22,6 +22,7 @@ class AddressMethods {
     const apiClient = new APIClient(this.options);
     return apiClient.address_getTxs(addr, fromIndex, toIndex, noAsm, noScript, noSpent, callback);
   }
+
   getStatus(addr: string, callback?: Function, fromIndex: number = 0, toIndex: number = 20): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.address_getStatus(addr, callback, fromIndex, toIndex);
@@ -93,6 +94,11 @@ class BlockMethods {
   getByBlockHashRaw(blockhash: string, callback?: Function): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.rawblock(blockhash, callback);
+  }
+
+  getBlockHeaderByBlockHash(blockhash: string, callback?: Function): Promise<any> {
+    const apiClient = new APIClient(this.options);
+    return apiClient.blockheader(blockhash, callback);
   }
 
   getByBlockHash(blockhash: string, callback?: Function): Promise<any> {

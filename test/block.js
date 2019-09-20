@@ -53,6 +53,45 @@ describe('#block.getByBlockHash GET /api/block/:blockhash test', () => {
 
 });
 
+
+
+describe('#block.getBlockHeaderByBlockHash GET /api/blockheader/:blockhash test', () => {
+    it('should fail no blockhash', async () => {
+        var result = await index.instance(options).block.getByBlockHash('inv');
+        expect(result).to.eql({
+            code: 500,
+            message: "Request failed with status code 500"
+        });
+    });
+    it('should succeed with blockhash', async () => {
+        var result = await index.instance(options).block.getBlockHeaderByBlockHash('000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52');
+        delete result.confirmations;
+        expect(result).to.eql({
+                hash:
+                '000000000000000006c4ca331e7f74df7a371f45857bb0a49be05390e15cbc52',
+               // onfirmations: 10,
+               height: 575870,
+               version: 549453824,
+               versionHex: '20c00000',
+               merkleroot:
+                '5eff2b149295b0010548910fc158664ee36f26781fbaceb42e71d924fac725c4',
+               time: 1553919636,
+               mediantime: 1553915823,
+               nonce: 1390191648,
+               bits: '180beac2',
+               difficulty: 92262545584.60136,
+               chainwork:
+                '000000000000000000000000000000000000000000de4ca83d16db8a005b4264',
+               previousblockhash:
+                '000000000000000008db5e402d1045c27de3d11a77c2ac7c420838c1b67df725',
+               nextblockhash:
+                '0000000000000000046c026c285ed7bc7ba7998f90938eb160c0f69b21dbdf2b'
+            }
+        );
+    });
+
+});
+
 describe('#block.getByBlockHashRaw GET /rawblock/:blockhash test', () => {
     it('should fail no blockhash', async () => {
         var result = await index.instance(options).block.getByBlockHashRaw('inv');
