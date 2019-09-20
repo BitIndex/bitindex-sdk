@@ -38,7 +38,7 @@ describe('#chaininfo.status GET /api/status test', () => {
         expect(result).to.eql({
             info:
                 {
-                    version: 100010100,
+                    version: 100020100,
                     protocolversion: 70015,
                     // blocks: 576014,
                     timeoffset: 0,
@@ -47,7 +47,7 @@ describe('#chaininfo.status GET /api/status test', () => {
                     // difficulty: 97359826681.75484,
                     testnet: false,
                     relayfee: 0.00001,
-                    errors: 'This is a pre-release test build - use at your own risk - do not use for mining or merchant applications',
+                    errors: 'Warning: Unknown block versions being mined! It\'s possible unknown rules are in effect',
                     network: 'livenet'
                 }
             }

@@ -5,7 +5,7 @@ var index = require('../dist/index.js');
 const options = {
     // api_url: 'http://localhost:3000',
     api_url: 'https://api.bitindex.network',
-    api_key: '...' // Get your api key at www.bitindex.network
+    api_key: '3CXxsbZq1q2qsSrFdsdwvz7vn91iCWTiVwFGtn9G9zYQDR7cx7p9brWB8Wn8eVy9wm' // Get your api key at www.bitindex.network
 };
 
 describe('#webhook.updateConfig PUT /webhook/endpoints', () => {

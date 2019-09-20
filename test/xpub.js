@@ -5,7 +5,7 @@ var index = require('../dist/index.js');
 const options = {
     // api_url: 'http://localhost:3000',
     api_url: 'https://api.bitindex.network',
-    api_key: '...' // Get your api key at www.bitindex.network
+    api_key: '3CXxsbZq1q2qsSrFdsdwvz7vn91iCWTiVwFGtn9G9zYQDR7cx7p9brWB8Wn8eVy9wm' // Get your api key at www.bitindex.network
 };
 
 describe('#getUtxos GET /xpub/:xpub/utxo test', () => {
@@ -26,11 +26,14 @@ describe('#getUtxos GET /xpub/:xpub/utxo test', () => {
          "num": 31,
          "chain": 1,
          "txid": "1c5c83b2f5b1d16ea8bb80c03dbd9bb98e939d94ca71553e4b8acee6f5534fd2",
+         "txId": "1c5c83b2f5b1d16ea8bb80c03dbd9bb98e939d94ca71553e4b8acee6f5534fd2",
          "vout": 0,
+         outputIndex: 0,
          "value": 1242,
          "height": 577570,
          "path": "1/31",
          "scriptPubKey": "76a914dd320fc943b5d115313ff62627f77eecdfb6183088ac",
+         "script": "76a914dd320fc943b5d115313ff62627f77eecdfb6183088ac",
          "amount": 0.00001242,
          "satoshis": 1242,
          // "confirmations": 1862

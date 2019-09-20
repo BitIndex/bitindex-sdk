@@ -21,52 +21,67 @@ describe('#tx.get GET /tx/:txid test', () => {
          delete result.confirmations;
          expect(result).to.eql(
             {
-               "hex": "0100000001270e55963a167a2fae66307efa3565032402c1387d62e5276464295d2a6834d8010000008a4730440220132f6d484de9d34d314aec945865af5da95f35cf4c7cc271d40bc99f8d7f12e3022051fcb2ce4461d1c6e8a778f5e4dcb27c8461d18e0652f68a7a09a98e95df5cb74141044e2c1e2c055e7aefc291679882382c35894a6aa6dd95644f598e506c239f9d83b1d9671c1d9673e3c2b74f07e8032343f3adc21367bd4cffae92fe31efcd598affffffff020000000000000000456a2231394878696756345179427633744870515663554551797131707a5a56646f41757404617364660d746578742f6d61726b646f776e055554462d3807616e6f7468657240390000000000001976a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac00000000",
-               "txid": "96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6",
-               "hash": "96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6",
-               "size": 301,
-               "version": 1,
-               "locktime": 0,
-               "vin": [
-               {
-                  "txid": "d834682a5d29646427e5627d38c10224036535fa7e3066ae2f7a163a96550e27",
-                  "vout": 1,
-                  "scriptSig": {
-                     "asm": "30440220132f6d484de9d34d314aec945865af5da95f35cf4c7cc271d40bc99f8d7f12e3022051fcb2ce4461d1c6e8a778f5e4dcb27c8461d18e0652f68a7a09a98e95df5cb7[ALL|FORKID] 044e2c1e2c055e7aefc291679882382c35894a6aa6dd95644f598e506c239f9d83b1d9671c1d9673e3c2b74f07e8032343f3adc21367bd4cffae92fe31efcd598a",
-                     "hex": "4730440220132f6d484de9d34d314aec945865af5da95f35cf4c7cc271d40bc99f8d7f12e3022051fcb2ce4461d1c6e8a778f5e4dcb27c8461d18e0652f68a7a09a98e95df5cb74141044e2c1e2c055e7aefc291679882382c35894a6aa6dd95644f598e506c239f9d83b1d9671c1d9673e3c2b74f07e8032343f3adc21367bd4cffae92fe31efcd598a"
-                  },
-                  "sequence": 4294967295
-               }
-               ],
-               "vout": [
-               {
-                  "value": 0,
-                  "n": 0,
-                  "scriptPubKey": {
-                     "asm": "OP_RETURN 31394878696756345179427633744870515663554551797131707a5a56646f417574 1717859169 746578742f6d61726b646f776e 5554462d38 616e6f74686572",
-                     "hex": "6a2231394878696756345179427633744870515663554551797131707a5a56646f41757404617364660d746578742f6d61726b646f776e055554462d3807616e6f74686572",
-                     "type": "nulldata"
-                  }
-               },
-               {
-                  "value": 0.00014656,
-                  "n": 1,
-                  "scriptPubKey": {
-                     "asm": "OP_DUP OP_HASH160 10bdcba3041b5e5517a58f2e405293c14a7c70c1 OP_EQUALVERIFY OP_CHECKSIG",
-                     "hex": "76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac",
-                     "reqSigs": 1,
-                     "type": "pubkeyhash",
-                     "addresses": [
-                     "12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX"
-                     ]
-                  }
-               }
-               ],
-               "blockhash": "0000000000000000078f34d9cd3f48e4948aef4c79548ec777050e1c8953a85c",
-               // "confirmations": 3428,
-               "time": 1554007897,
-               "blocktime": 1554007897
-            }
+                "txid":"96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6",
+                "hash":"96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6",
+                "size":301,
+                "version":1,
+                "locktime":0,
+                "vin":[
+                   {
+                      "value":0.00015058,
+                      "valueSat":15058,
+                      "txid":"d834682a5d29646427e5627d38c10224036535fa7e3066ae2f7a163a96550e27",
+                      "vout":1,
+                      "n":0,
+                      "scriptSig":{
+                         "asm":"30440220132f6d484de9d34d314aec945865af5da95f35cf4c7cc271d40bc99f8d7f12e3022051fcb2ce4461d1c6e8a778f5e4dcb27c8461d18e0652f68a7a09a98e95df5cb7[ALL|FORKID] 044e2c1e2c055e7aefc291679882382c35894a6aa6dd95644f598e506c239f9d83b1d9671c1d9673e3c2b74f07e8032343f3adc21367bd4cffae92fe31efcd598a",
+                         "hex":"4730440220132f6d484de9d34d314aec945865af5da95f35cf4c7cc271d40bc99f8d7f12e3022051fcb2ce4461d1c6e8a778f5e4dcb27c8461d18e0652f68a7a09a98e95df5cb74141044e2c1e2c055e7aefc291679882382c35894a6aa6dd95644f598e506c239f9d83b1d9671c1d9673e3c2b74f07e8032343f3adc21367bd4cffae92fe31efcd598a"
+                      },
+                      "addr":"12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX",
+                      "address":"12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX",
+                      "sequence":4294967295
+                   }
+                ],
+                "vout":[
+                   {
+                      "value":0,
+                      "valueSat":0,
+                      "n":0,
+                      "scriptPubKey":{
+                         "asm":"OP_RETURN 31394878696756345179427633744870515663554551797131707a5a56646f417574 1717859169 746578742f6d61726b646f776e 5554462d38 616e6f74686572",
+                         "hex":"6a2231394878696756345179427633744870515663554551797131707a5a56646f41757404617364660d746578742f6d61726b646f776e055554462d3807616e6f74686572",
+                         "type":"nulldata"
+                      },
+                      "spentTxId":null,
+                      "spentIndex":null,
+                      "spentHeight":null
+                   },
+                   {
+                      "value":0.00014656,
+                      "valueSat":14656,
+                      "n":1,
+                      "scriptPubKey":{
+                         "asm":"OP_DUP OP_HASH160 10bdcba3041b5e5517a58f2e405293c14a7c70c1 OP_EQUALVERIFY OP_CHECKSIG",
+                         "hex":"76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac",
+                         "reqSigs":1,
+                         "type":"pubkeyhash",
+                         "addresses":[
+                            "12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX"
+                         ]
+                      },
+                      "spentTxId":null,
+                      "spentIndex":null,
+                      "spentHeight":null
+                   }
+                ],
+                "blockhash":"0000000000000000078f34d9cd3f48e4948aef4c79548ec777050e1c8953a85c",
+                "time":1554007897,
+                "blocktime":1554007897,
+                "valueIn":0.00015058,
+                "fees":0.00000402,
+                "valueOut":0.00014656,
+                "rawtx":"0100000001270e55963a167a2fae66307efa3565032402c1387d62e5276464295d2a6834d8010000008a4730440220132f6d484de9d34d314aec945865af5da95f35cf4c7cc271d40bc99f8d7f12e3022051fcb2ce4461d1c6e8a778f5e4dcb27c8461d18e0652f68a7a09a98e95df5cb74141044e2c1e2c055e7aefc291679882382c35894a6aa6dd95644f598e506c239f9d83b1d9671c1d9673e3c2b74f07e8032343f3adc21367bd4cffae92fe31efcd598affffffff020000000000000000456a2231394878696756345179427633744870515663554551797131707a5a56646f41757404617364660d746578742f6d61726b646f776e055554462d3807616e6f7468657240390000000000001976a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac00000000"
+             }
         );
     });
 });
