@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const defaultOptions = {
-    api_url: 'http://ec2-54-214-118-47.us-west-2.compute.amazonaws.com',
+    api_url: 'https://api.bitindex.network',
     // api_key: 'your api key ', // Get a key at www.bitindex.network
     network: 'main',
     version_path: 'api/v3',

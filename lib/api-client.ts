@@ -8,7 +8,7 @@ export interface BitIndexApiClientOptions {
 }
 
 const defaultOptions: BitIndexApiClientOptions = {
-    api_url: 'http://ec2-54-214-118-47.us-west-2.compute.amazonaws.com',
+    api_url: 'https://api.bitindex.network',
     // api_key: 'your api key ', // Get a key at www.bitindex.network
     network: 'main', // 'test', or 'stn'
     version_path: 'api/v3',
