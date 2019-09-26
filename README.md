@@ -75,6 +75,7 @@ https://api.bitindex.network/api/v3/stn/tx/1a31edadbfa73702c0768ceace77ba6000cd9
         - [webhook.getConfig](#webhookgetConfig)
         - [webhook.updateMonitoredAddresses](#webhookupdateMonitoredAddresses)
         - [webhook.getMonitoredAddresses](#webhookgetMonitoredAddresses)
+        - [webhook.deleteAllMonitoredAddresses](#webhookdeleteAllMonitoredAddresses)
         - [Callback Example](#callback-example)
 
 ## Installation and Usage
@@ -839,6 +840,33 @@ var result = await index.instance(options).webhook.getMonitoredAddresses(
         },
         {
             addr: '1GjiTsV66HXngNX6Fq8xMnYZVj13munG3m'
+        }
+    ]
+);
+```
+
+### webhook.deleteAllMonitoredAddresses
+
+Delete all addresses and xpubs that are monitored for payments.
+
+NOTE: You must provide an `api_key` for xpub related calls.
+
+```javascript
+
+var bitindex = require('bitindex-sdk').instance({
+    api_key: "your api key"
+});
+
+// Deletes all monitored xpub and addrs for an account
+var result = await index.instance(options).webhook.deleteAllMonitoredAddresses(
+    [
+        {
+            addr: 'xpub6CYu4dQVx3Ki3ooYqVdDH1md7hGJZSxCSRFEfKAmoowPRPcwmXRGqdrMcJh7jhTY2a2BT2nSX8AESPgQfhgnfUdcn8N9EwJkWEKBHHJV7fJ',
+            delete: true,
+        },
+        {
+            addr: '1GjiTsV66HXngNX6Fq8xMnYZVj13munG3m',
+            delete: true,
         }
     ]
 );
