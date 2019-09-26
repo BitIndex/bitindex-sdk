@@ -103,10 +103,36 @@ export class APIClient {
         });
     }
 
-    webhook_updateMonitoredAddresses(addrs: Array<{addr: string}>, callback?: Function): Promise<any> {
+    webhook_updateMonitoredAddresses(addrs: Array<{addr: string, delete?: boolean}>, callback?: Function): Promise<any> {
         return new Promise((resolve, reject) => {
             axios.put(this.fullUrl + `/webhook/monitored_addrs?api_key=${this.options.api_key}`,
                 addrs,
+                {
+                    headers: { }
+                }
+            ).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, {
+                    code: ex.response.status,
+                    message: ex.message ? ex.message : ex.toString()
+                }, callback)
+            })
+        });
+    }
+
+    webhook_deleteMonitoredAddresses(addrs: Array<{addr: string}>, callback?: Function): Promise<any> {
+        const deleteAddrs: any = [];
+
+        for (const addr of addrs) {
+            deleteAddrs.push({
+                addr,
+                delete: true,
+            });
+        }
+        return new Promise((resolve, reject) => {
+            axios.put(this.fullUrl + `/webhook/monitored_addrs?api_key=${this.options.api_key}`,
+            deleteAddrs,
                 {
                     headers: { }
                 }

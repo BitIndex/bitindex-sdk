@@ -157,7 +157,7 @@ class WebhookMethods {
     return apiClient.webhook_getConfig(callback);
   }
 
-  updateMonitoredAddresses(addrs: Array<{addr: string}>, callback?: Function): Promise<any> {
+  updateMonitoredAddresses(addrs: Array<{addr: string, delete?: boolean}>, callback?: Function): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.webhook_updateMonitoredAddresses(addrs, callback);
   }

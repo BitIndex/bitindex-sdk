@@ -3,8 +3,8 @@ var expect = require('chai').expect;
 var index = require('../dist/index.js');
 
 const options = {
-    // api_url: 'http://localhost:3000',
-    api_url: 'https://api.bitindex.network'
+    api_url: 'http://localhost:3000',
+    //api_url: 'https://api.bitindex.network',
 };
 
 describe('#chaininfo.bestBlockHash GET /api/status?q=getBestBlockHash test', () => {
@@ -47,7 +47,8 @@ describe('#chaininfo.status GET /api/status test', () => {
                     // difficulty: 97359826681.75484,
                     testnet: false,
                     relayfee: 0.00001,
-                    errors: 'Warning: Unknown block versions being mined! It\'s possible unknown rules are in effect',
+                    // errors: 'Warning: Unknown block versions being mined! It\'s possible unknown rules are in effect',
+                    errors: 'This is a pre-release test build - use at your own risk - do not use for mining or merchant applications',
                     network: 'livenet'
                 }
             }

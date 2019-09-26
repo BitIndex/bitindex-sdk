@@ -3,15 +3,17 @@ var expect = require('chai').expect;
 var index = require('../dist/index.js');
 
 const options = {
-   // api_url: 'http://localhost:3000',
-   api_url: 'https://api.bitindex.network',
+   api_url: 'http://localhost:3000',
+   //api_url: 'https://api.bitindex.network',
 };
 
 describe('#getTransactions POST /addrs/txs test', () => {
+
     it('should succeed with default status', async () => {
         var result = await index.instance(options).address.getTransactions(
             '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX'
         );
+
         for (let i = 0; i< result.items.length; i++) {
             delete result.items[i].confirmations;
         }
@@ -575,7 +577,6 @@ describe('#getStatus GET /addr/:address test', () => {
 
     it('should succeed with getting status', async () => {
         var result = await index.instance(options).address.getStatus('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
-
         expect(result).to.eql(
             {
                "addrStr":"12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX",
@@ -612,8 +613,10 @@ describe('#getUtxos (single address) GET /addr/:address/utxo test', () => {
 
     it('should succeed with getting utxos', async () => {
         var result = await index.instance(options).address.getUtxos('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
+        expect(result.length).to.eql(2);
         delete result[0].confirmations;
         delete result[1].confirmations;
+
         expect(result).to.eql(
             [
                 {
@@ -706,9 +709,11 @@ describe('#getUtxos (multiple addresses) POST /addrs/utxo test', () => {
 
     it('should succeed with getting utxos', async () => {
         var result = await index.instance(options).address.getUtxos(['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD']);
+        expect(result.length).to.eql(3);
         delete result[0].confirmations;
         delete result[1].confirmations;
         delete result[2].confirmations;
+
         expect(result).to.eql(
             [
                 {

@@ -23,6 +23,10 @@ export declare class APIClient {
     webhook_getMonitoredAddresses(callback?: Function): Promise<any>;
     webhook_updateMonitoredAddresses(addrs: Array<{
         addr: string;
+        delete?: boolean;
+    }>, callback?: Function): Promise<any>;
+    webhook_deleteMonitoredAddresses(addrs: Array<{
+        addr: string;
     }>, callback?: Function): Promise<any>;
     webhook_getConfig(callback?: Function): Promise<any>;
     webhook_updateConfig(url: string, enabled: boolean, secret: string, callback?: Function): Promise<any>;

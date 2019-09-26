@@ -98,6 +98,27 @@ class APIClient {
             });
         });
     }
+    webhook_deleteMonitoredAddresses(addrs, callback) {
+        const deleteAddrs = [];
+        for (const addr of addrs) {
+            deleteAddrs.push({
+                addr,
+                delete: true,
+            });
+        }
+        return new Promise((resolve, reject) => {
+            axios_1.default.put(this.fullUrl + `/webhook/monitored_addrs?api_key=${this.options.api_key}`, deleteAddrs, {
+                headers: {}
+            }).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, {
+                    code: ex.response.status,
+                    message: ex.message ? ex.message : ex.toString()
+                }, callback);
+            });
+        });
+    }
     webhook_getConfig(callback) {
         return new Promise((resolve, reject) => {
             axios_1.default.get(this.fullUrl + `/webhook/endpoint?api_key=${this.options.api_key}`, {
