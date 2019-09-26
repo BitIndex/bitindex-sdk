@@ -121,6 +121,23 @@ export class APIClient {
         });
     }
 
+    webhook_deleteAllMonitoredAddresses(callback?: Function): Promise<any> {
+        return new Promise((resolve, reject) => {
+            axios.delete(this.fullUrl + `/webhook/monitored_addrs?api_key=${this.options.api_key}`,
+                {
+                    headers: { }
+                }
+            ).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, {
+                    code: ex.response.status,
+                    message: ex.message ? ex.message : ex.toString()
+                }, callback)
+            })
+        });
+    }
+
     webhook_deleteMonitoredAddresses(addrs: Array<{addr: string}>, callback?: Function): Promise<any> {
         const deleteAddrs: any = [];
 

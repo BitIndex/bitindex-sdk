@@ -25,6 +25,7 @@ export declare class APIClient {
         addr: string;
         delete?: boolean;
     }>, callback?: Function): Promise<any>;
+    webhook_deleteAllMonitoredAddresses(callback?: Function): Promise<any>;
     webhook_deleteMonitoredAddresses(addrs: Array<{
         addr: string;
     }>, callback?: Function): Promise<any>;

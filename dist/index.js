@@ -130,6 +130,10 @@ class WebhookMethods {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.webhook_getConfig(callback);
     }
+    deleteAllMonitoredAddresses(callback) {
+        const apiClient = new api_client_1.APIClient(this.options);
+        return apiClient.webhook_deleteAllMonitoredAddresses(callback);
+    }
     updateMonitoredAddresses(addrs, callback) {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.webhook_updateMonitoredAddresses(addrs, callback);

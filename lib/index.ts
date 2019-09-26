@@ -157,6 +157,11 @@ class WebhookMethods {
     return apiClient.webhook_getConfig(callback);
   }
 
+  deleteAllMonitoredAddresses(callback?: Function): Promise<any> {
+    const apiClient = new APIClient(this.options);
+    return apiClient.webhook_deleteAllMonitoredAddresses(callback);
+  }
+
   updateMonitoredAddresses(addrs: Array<{addr: string, delete?: boolean}>, callback?: Function): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.webhook_updateMonitoredAddresses(addrs, callback);

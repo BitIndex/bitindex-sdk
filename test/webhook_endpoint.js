@@ -239,3 +239,41 @@ describe('#webhook.getMonitoredAddresses GET /webhook/monitored_addrs', () => {
         );
     });
 });
+
+
+describe('#webhook.deleteAllMonitoredAddresses DELETE /webhook/monitored_addrs', () => {
+    it('should succeed delete all', async () => {
+        var result = await index.instance(options).webhook.getMonitoredAddresses();
+        expect(result).to.eql(
+            [
+                {
+                    addr: 'xpub6CYu4dQVx3Ki3ooYqVdDH1md7hGJZSxCSRFEfKAmoowPRPcwmXRGqdrMcJh7jhTY2a2BT2nSX8AESPgQfhgnfUdcn8N9EwJkWEKBHHJV7fJ',
+                },
+                {
+                    addr: '1GjiTsV66HXngNX6Fq8xMnYZVj13munG3m'
+                }
+            ]
+        );
+
+        var result = await index.instance(options).webhook.deleteAllMonitoredAddresses();
+        expect(result).to.eql(
+            [
+                {
+                    addr: 'xpub6CYu4dQVx3Ki3ooYqVdDH1md7hGJZSxCSRFEfKAmoowPRPcwmXRGqdrMcJh7jhTY2a2BT2nSX8AESPgQfhgnfUdcn8N9EwJkWEKBHHJV7fJ',
+                    delete: true,
+                },
+                {
+                    addr: '1GjiTsV66HXngNX6Fq8xMnYZVj13munG3m',
+                    delete: true,
+                }
+            ]
+        );
+
+        var result = await index.instance(options).webhook.getMonitoredAddresses();
+        expect(result).to.eql(
+            [
+
+            ]
+        );
+    });
+});
