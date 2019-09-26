@@ -790,6 +790,8 @@ var result = await index.instance(options).webhook.getConfig();
 
 Update addresses and xpubs that are monitored for payments.
 
+Use `delete: true` to remove from monitoring.
+
 NOTE: You must provide an `api_key` for xpub related calls.
 
 ```javascript
@@ -807,6 +809,10 @@ var result = await index.instance(options).webhook.updateMonitoredAddresses(
         },
         {
             addr: '1GjiTsV66HXngNX6Fq8xMnYZVj13munG3m'
+        },
+        {
+            addr: '1H6GNTDYP3ewffAGC6dEPvGHtRQrj2etkh',
+            delete: true
         }
     ]
 );
