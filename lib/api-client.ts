@@ -450,6 +450,90 @@ export class APIClient {
         });
     }
 
+    address_generatePaymentTx(args: { utxoInputSourceAddrs: string, changeAddr: string, targets: Array<{address: string, value: number}>}, callback?: Function): Promise<any> {
+        if (!this.isStringOrNonEmptyArray(args.utxoInputSourceAddrs)) {
+            return new Promise((resolve, reject) => {
+                this.callbackAndResolve(resolve, {
+                    code: 422,
+                    message: 'utxoInputSourceAddrs required'
+                }, callback)
+            });
+        }
+        if (!this.isStringOrNonEmptyArray(args.changeAddr)) {
+            return new Promise((resolve, reject) => {
+                this.callbackAndResolve(resolve, {
+                    code: 422,
+                    message: 'changeAddr required'
+                }, callback)
+            });
+        }
+        let addrs: string[] = [];
+        if (!Array.isArray(args.targets)) {
+            return new Promise((resolve, reject) => {
+                this.callbackAndResolve(resolve, {
+                    code: 422,
+                    message: 'targets required'
+                }, callback)
+            });
+        }
+        return new Promise((resolve, reject) => {
+            axios.post(this.fullUrl + `/payments/addrs/tx/generate`, args,
+                {
+                    headers: {}
+                }
+            ).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, {
+                    code: ex.response.status,
+                    message: ex.message ? ex.message : ex.toString()
+                }, callback)
+            })
+        });
+    }
+
+    xpub_generatePaymentTx(args: { utxoInputSourceXpub: string, changeAddr: string, targets: Array<{address: string, value: number}>}, callback?: Function): Promise<any> {
+        if (!this.isStringOrNonEmptyArray(args.utxoInputSourceXpub)) {
+            return new Promise((resolve, reject) => {
+                this.callbackAndResolve(resolve, {
+                    code: 422,
+                    message: 'utxoInputSourceXpub required'
+                }, callback)
+            });
+        }
+        if (!this.isStringOrNonEmptyArray(args.changeAddr)) {
+            return new Promise((resolve, reject) => {
+                this.callbackAndResolve(resolve, {
+                    code: 422,
+                    message: 'changeAddr required'
+                }, callback)
+            });
+        }
+        let addrs: string[] = [];
+        if (!Array.isArray(args.targets)) {
+            return new Promise((resolve, reject) => {
+                this.callbackAndResolve(resolve, {
+                    code: 422,
+                    message: 'targets required'
+                }, callback)
+            });
+        }
+        return new Promise((resolve, reject) => {
+            axios.post(this.fullUrl + `/payments/xpub/tx/generate?&api_key=${this.options.api_key}`, args,
+                {
+                    headers: {}
+                }
+            ).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, {
+                    code: ex.response.status,
+                    message: ex.message ? ex.message : ex.toString()
+                }, callback)
+            })
+        });
+    }
+
     private isStringOrNonEmptyArray(item: any):  boolean {
         if (!item) {
             return false;

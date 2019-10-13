@@ -1,13 +1,13 @@
 {
   "name": "bitindex-sdk",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "MatterCloud BitIndex Javascript SDK - https://www.mattercloud.net",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && gulp build",
     "test": "mocha --reporter spec",
-    "test_webhooks": "mocha --reporter spec --grep webhook",
+    "test_single": "mocha --reporter spec --grep payments",
     "prepare": "npm run build"
   },
   "repository": {

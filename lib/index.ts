@@ -27,6 +27,10 @@ class AddressMethods {
     const apiClient = new APIClient(this.options);
     return apiClient.address_getStatus(addr, callback, fromIndex, toIndex);
   }
+  generatePaymentTx(args: { utxoInputSourceAddrs: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
+    const apiClient = new APIClient(this.options);
+    return apiClient.address_generatePaymentTx(args);
+  }
 }
 
 class XpubMethods {
@@ -57,6 +61,11 @@ class XpubMethods {
   getTransactions(xpub: string, callback?: Function, fromIndex: number = 0, toIndex: number = 20): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.xpub_getTransactions(xpub, fromIndex, toIndex, callback);
+  }
+
+  generatePaymentTx(args: { utxoInputSourceXpub: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
+    const apiClient = new APIClient(this.options);
+    return apiClient.xpub_generatePaymentTx(args);
   }
 }
 

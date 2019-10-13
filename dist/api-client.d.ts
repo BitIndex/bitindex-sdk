@@ -42,6 +42,22 @@ export declare class APIClient {
     status(callback?: Function): Promise<any>;
     address_getUtxos(address: any, fromIndex?: number, toIndex?: number, callback?: Function): Promise<any>;
     address_getStatus(address: any, callback?: Function, fromIndex?: number, toIndex?: number): Promise<any>;
+    address_generatePaymentTx(args: {
+        utxoInputSourceAddrs: string;
+        changeAddr: string;
+        targets: Array<{
+            address: string;
+            value: number;
+        }>;
+    }, callback?: Function): Promise<any>;
+    xpub_generatePaymentTx(args: {
+        utxoInputSourceXpub: string;
+        changeAddr: string;
+        targets: Array<{
+            address: string;
+            value: number;
+        }>;
+    }, callback?: Function): Promise<any>;
     private isStringOrNonEmptyArray;
     xpub_getStatus(xpub: any, callback?: Function): Promise<any>;
     xpub_getAddressNext(xpub: any, reserveTime?: number, callback?: Function): Promise<any>;

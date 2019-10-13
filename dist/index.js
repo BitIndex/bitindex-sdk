@@ -23,6 +23,10 @@ class AddressMethods {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.address_getStatus(addr, callback, fromIndex, toIndex);
     }
+    generatePaymentTx(args) {
+        const apiClient = new api_client_1.APIClient(this.options);
+        return apiClient.address_generatePaymentTx(args);
+    }
 }
 class XpubMethods {
     constructor(options) {
@@ -49,6 +53,10 @@ class XpubMethods {
     getTransactions(xpub, callback, fromIndex = 0, toIndex = 20) {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.xpub_getTransactions(xpub, fromIndex, toIndex, callback);
+    }
+    generatePaymentTx(args) {
+        const apiClient = new api_client_1.APIClient(this.options);
+        return apiClient.xpub_generatePaymentTx(args);
     }
 }
 class TxMethods {
