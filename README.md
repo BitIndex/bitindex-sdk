@@ -78,8 +78,8 @@ https://api.bitindex.network/api/v3/stn/tx/1a31edadbfa73702c0768ceace77ba6000cd9
         - [webhook.deleteAllMonitoredAddresses](#webhookdeleteAllMonitoredAddresses)
         - [Callback Example](#callback-example)
     - [Payments](#payments)
-        - [payments.generatePaymentTxFromXpub](#generatePaymentTxFromXpub)
-        - [payments.generatePaymentTxFromAddrs](#generatePaymentTxFromAddrs)
+        - [payments.generatePaymentTxFromXpub](#paymentsgeneratePaymentTxFromXpub)
+        - [payments.generatePaymentTxFromAddrs](#paymentsgeneratePaymentTxFromAddrs)
 
 ## Installation and Usage
 
@@ -904,6 +904,7 @@ Sample POST Request Body (Content-Type: application/json)
     network: "main", // only main supported for now.
 }
 ```
+### Payments
 
 
 #### payments.generatePaymentTxFromXpub
@@ -981,7 +982,6 @@ Sample Response:
 }
 
 ```
-
 
 
 #### payments.generatePaymentTxFromAddrs
