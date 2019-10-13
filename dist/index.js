@@ -23,10 +23,6 @@ class AddressMethods {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.address_getStatus(addr, callback, fromIndex, toIndex);
     }
-    generatePaymentTx(args) {
-        const apiClient = new api_client_1.APIClient(this.options);
-        return apiClient.address_generatePaymentTx(args);
-    }
 }
 class XpubMethods {
     constructor(options) {
@@ -54,9 +50,20 @@ class XpubMethods {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.xpub_getTransactions(xpub, fromIndex, toIndex, callback);
     }
-    generatePaymentTx(args) {
+}
+class PaymentsMethods {
+    constructor(options) {
+        if (options) {
+            this.options = options;
+        }
+    }
+    generatePaymentTxFromXpub(args) {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.xpub_generatePaymentTx(args);
+    }
+    generatePaymentTxFromAddrs(args) {
+        const apiClient = new api_client_1.APIClient(this.options);
+        return apiClient.address_generatePaymentTx(args);
     }
 }
 class TxMethods {
@@ -166,6 +173,7 @@ class BitIndexSDK {
         this.block = new BlockMethods(this.options);
         this.chaininfo = new ChainInfoMethods(this.options);
         this.webhook = new WebhookMethods(this.options);
+        this.payments = new PaymentsMethods(this.options);
     }
 }
 exports.default = BitIndexSDK;

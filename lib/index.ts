@@ -27,11 +27,9 @@ class AddressMethods {
     const apiClient = new APIClient(this.options);
     return apiClient.address_getStatus(addr, callback, fromIndex, toIndex);
   }
-  generatePaymentTx(args: { utxoInputSourceAddrs: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
-    const apiClient = new APIClient(this.options);
-    return apiClient.address_generatePaymentTx(args);
-  }
+
 }
+
 
 class XpubMethods {
   options;
@@ -62,10 +60,24 @@ class XpubMethods {
     const apiClient = new APIClient(this.options);
     return apiClient.xpub_getTransactions(xpub, fromIndex, toIndex, callback);
   }
+}
 
-  generatePaymentTx(args: { utxoInputSourceXpub: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
+class PaymentsMethods {
+  options;
+  constructor(options?: any) {
+    if (options) {
+      this.options = options;
+    }
+  }
+
+  generatePaymentTxFromXpub(args: { utxoInputSourceXpub: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.xpub_generatePaymentTx(args);
+  }
+
+  generatePaymentTxFromAddrs(args: { utxoInputSourceAddrs: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
+    const apiClient = new APIClient(this.options);
+    return apiClient.address_generatePaymentTx(args);
   }
 }
 
@@ -197,6 +209,7 @@ export default class BitIndexSDK {
   block;
   chaininfo;
   webhook;
+  payments;
   constructor(providedOptions?: any) {
     this.options = Object.assign({}, defaultOptions, providedOptions);
     this.address = new AddressMethods(this.options);
@@ -205,6 +218,7 @@ export default class BitIndexSDK {
     this.block = new BlockMethods(this.options);
     this.chaininfo = new ChainInfoMethods(this.options);
     this.webhook = new WebhookMethods(this.options);
+    this.payments = new PaymentsMethods(this.options);
   }
 }
 

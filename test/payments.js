@@ -8,10 +8,10 @@ const options = {
    api_key: '3CXxsbZq1q2qsSrFdsdwvz7vn91iCWTiVwFGtn9G9zYQDR7cx7p9brWB8Wn8eVy9wm' // Get your api key at www.bitindex.network
 };
 
-describe('#generatePaymentTx POST /payments/addrs/tx/generate test', () => {
+describe('#generatePaymentTxFromAddrs POST /payments/addrs/tx/generate test', () => {
 
     it('should generating a payment txs from addrs', async () => {
-        var result = await index.instance(options).address.generatePaymentTx(
+        var result = await index.instance(options).payments.generatePaymentTxFromAddrs(
             {
                "utxoInputSourceAddrs": "18FnwHbZz5wwCxJ4h2sQsAMYd7qyHryJUX",
                "changeAddr": "1CgECg3kJdSWEkozDMaEZh1kuHWVwSnN9Z",
@@ -59,8 +59,11 @@ describe('#generatePaymentTx POST /payments/addrs/tx/generate test', () => {
         );
     });
 
+   });
+
+   describe('#generatePaymentTxFromXpub POST /payments/addrs/xpub/generate test', () => {
     it('should generating a payment txs from xpub', async () => {
-      var result = await index.instance(options).xpub.generatePaymentTx(
+      var result = await index.instance(options).payments.generatePaymentTxFromXpub(
          {
             "utxoInputSourceXpub": "xpub6CYu4dQVx3Ki3ooYqVdDH1md7hGJZSxCSRFEfKAmoowPRPcwmXRGqdrMcJh7jhTY2a2BT2nSX8AESPgQfhgnfUdcn8N9EwJkWEKBHHJV7fJ",
             "changeAddr": "1CgECg3kJdSWEkozDMaEZh1kuHWVwSnN9Z",
