@@ -1,6 +1,6 @@
 {
   "name": "bitindex-sdk",
-  "version": "3.2.4",
+  "version": "3.2.5",
   "description": "MatterCloud BitIndex Javascript SDK - https://www.mattercloud.net",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

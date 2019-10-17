@@ -70,12 +70,12 @@ class PaymentsMethods {
     }
   }
 
-  generatePaymentTxFromXpub(args: { utxoInputSourceXpub: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
+  generatePaymentTxFromXpub(args: { feeRate?: number, utxoInputSourceXpub: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.xpub_generatePaymentTx(args);
   }
 
-  generatePaymentTxFromAddrs(args: { utxoInputSourceAddrs: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
+  generatePaymentTxFromAddrs(args: { feeRate?: number, utxoInputSourceAddrs: string, changeAddr: string, targets: Array<{address: string, value: number}> }): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.address_generatePaymentTx(args);
   }

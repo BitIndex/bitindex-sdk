@@ -450,7 +450,7 @@ export class APIClient {
         });
     }
 
-    address_generatePaymentTx(args: { utxoInputSourceAddrs: string, changeAddr: string, targets: Array<{address: string, value: number}>}, callback?: Function): Promise<any> {
+    address_generatePaymentTx(args: { feeRate?: number, utxoInputSourceAddrs: string, changeAddr: string, targets: Array<{address: string, value: number}>}, callback?: Function): Promise<any> {
         if (!this.isStringOrNonEmptyArray(args.utxoInputSourceAddrs)) {
             return new Promise((resolve, reject) => {
                 this.callbackAndResolve(resolve, {
@@ -492,7 +492,7 @@ export class APIClient {
         });
     }
 
-    xpub_generatePaymentTx(args: { utxoInputSourceXpub: string, changeAddr: string, targets: Array<{address: string, value: number}>}, callback?: Function): Promise<any> {
+    xpub_generatePaymentTx(args: { feeRate?: number, utxoInputSourceXpub: string, changeAddr: string, targets: Array<{address: string, value: number}>}, callback?: Function): Promise<any> {
         if (!this.isStringOrNonEmptyArray(args.utxoInputSourceXpub)) {
             return new Promise((resolve, reject) => {
                 this.callbackAndResolve(resolve, {

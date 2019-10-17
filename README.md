@@ -921,6 +921,7 @@ var bitindex = require('bitindex-sdk').instance({
 
 var result = await index.instance(options).payments.generatePaymentTxFromXpub(
     {
+        "feeRate": 2, // (optional) 2 bytes per sat
         "utxoInputSourceXpub": "xpub6CYu4dQVx3Ki3ooYqVdDH1md7hGJZSxCSRFEfKAmoowPRPcwmXRGqdrMcJh7jhTY2a2BT2nSX8AESPgQfhgnfUdcn8N9EwJkWEKBHHJV7fJ",
         "changeAddr": "1CgECg3kJdSWEkozDMaEZh1kuHWVwSnN9Z",
         "targets": [
@@ -998,6 +999,7 @@ var bitindex = require('bitindex-sdk').instance({
 
 var result = await index.instance(options).payments.generatePaymentTxFromAddrs(
     {
+        "feeRate": 1, // (optional) 1 bytes per sat
         "utxoInputSourceAddrs": "18FnwHbZz5wwCxJ4h2sQsAMYd7qyHryJUX",
         "changeAddr": "1CgECg3kJdSWEkozDMaEZh1kuHWVwSnN9Z",
         "targets": [

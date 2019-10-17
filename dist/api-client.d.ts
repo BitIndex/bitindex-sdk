@@ -43,6 +43,7 @@ export declare class APIClient {
     address_getUtxos(address: any, fromIndex?: number, toIndex?: number, callback?: Function): Promise<any>;
     address_getStatus(address: any, callback?: Function, fromIndex?: number, toIndex?: number): Promise<any>;
     address_generatePaymentTx(args: {
+        feeRate?: number;
         utxoInputSourceAddrs: string;
         changeAddr: string;
         targets: Array<{
@@ -51,6 +52,7 @@ export declare class APIClient {
         }>;
     }, callback?: Function): Promise<any>;
     xpub_generatePaymentTx(args: {
+        feeRate?: number;
         utxoInputSourceXpub: string;
         changeAddr: string;
         targets: Array<{
