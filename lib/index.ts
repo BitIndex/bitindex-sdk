@@ -8,9 +8,17 @@ class AddressMethods {
     }
   }
 
-  getUtxos(addrs: any[], callback?: Function, fromIndex: number = 0, toIndex: number = 20): Promise<any> {
+  getUtxos(addrs: any, callback?: Function): Promise<any> {
     const apiClient = new APIClient(this.options);
-    return apiClient.address_getUtxos(addrs, fromIndex, toIndex, callback);
+    // return apiClient.addresses_getUtxos(addrs, fromIndex, toIndex, callback);
+    return apiClient.addresses_getUtxosWithOptions({
+      addrs
+    }, callback);
+  }
+
+  getUtxosWithOptions(args: { addrs: any[], offset?: number, limit?: number, afterHeight?: number, sort?: string}, callback?: Function): Promise<any> {
+    const apiClient = new APIClient(this.options);
+    return apiClient.addresses_getUtxosWithOptions(args, callback);
   }
 
   getSummary(addr: any, callback?: Function): Promise<any> {
@@ -130,6 +138,11 @@ class BlockMethods {
   getBlockHashByIndex(index: any, callback?: Function): Promise<any> {
     const apiClient = new APIClient(this.options);
     return apiClient.blockindex(index, callback);
+  }
+
+  getBlockHeaders(args: { fromBlockHash?: string, fromHeight?: number, order?: string, limit?: number }, callback?: Function): Promise<any> {
+    const apiClient = new APIClient(this.options);
+    return apiClient.getBlockHeaders(args, callback);
   }
 }
 

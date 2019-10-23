@@ -3,8 +3,8 @@ var expect = require('chai').expect;
 var index = require('../dist/index.js');
 
 const options = {
-    api_url: 'http://localhost:3000',
-    //api_url: 'https://api.bitindex.network',
+    // api_url: 'http://localhost:3000',
+    api_url: 'https://api.bitindex.network',
 };
 
 describe('#chaininfo.bestBlockHash GET /api/status?q=getBestBlockHash test', () => {

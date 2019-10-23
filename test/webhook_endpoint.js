@@ -3,14 +3,14 @@ var expect = require('chai').expect;
 var index = require('../dist/index.js');
 
 const options = {
-    api_url: 'http://localhost:3000',
-    //api_url: 'https://api.bitindex.network',
+    // api_url: 'http://localhost:3000',
+    api_url: 'https://api.bitindex.network',
     api_key: 'key1' // Get your api key at www.bitindex.network
 };
 
 const options2 = {
-    api_url: 'http://localhost:3000',
-    //api_url: 'https://api.bitindex.network',
+    //api_url: 'http://localhost:3000',
+    api_url: 'https://api.bitindex.network',
     api_key: 'key2' // Get your api key at www.bitindex.network
 };
 

@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const defaultOptions = {
-    api_url: 'https://api.bitindex.network',
+    // api_url: 'https://api.bitindex.network',
+    api_url: 'localhost:3000',
     // api_key: 'your api key ', // Get a key at www.bitindex.network
     network: 'main',
     version_path: 'api/v3',
@@ -58,7 +59,7 @@ class APIClient {
                     message: 'txid required'
                 }, callback);
             }
-            axios_1.default.get(this.fullUrl + `/rawtx/${txid}`, {
+            axios_1.default.get(this.fullUrl + `/rawtx/${txid}?api_key=${this.options.api_key}`, {
                 headers: {}
             }).then((response) => {
                 this.callbackAndResolve(resolve, response.data, callback);
@@ -176,7 +177,7 @@ class APIClient {
                     message: 'blockhash required'
                 }, callback);
             }
-            axios_1.default.get(this.fullUrl + `/blockheader/${blockhash}`, {
+            axios_1.default.get(this.fullUrl + `/blockheader/${blockhash}?api_key=${this.options.api_key}`, {
                 headers: {}
             }).then((response) => {
                 this.callbackAndResolve(resolve, response.data, callback);
@@ -196,7 +197,34 @@ class APIClient {
                     message: 'blockhash required'
                 }, callback);
             }
-            axios_1.default.get(this.fullUrl + `/block/${blockhash}`, {
+            axios_1.default.get(this.fullUrl + `/block/${blockhash}?api_key=${this.options.api_key}`, {
+                headers: {}
+            }).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, {
+                    code: ex.response.status,
+                    message: ex.message ? ex.message : ex.toString()
+                }, callback);
+            });
+        });
+    }
+    getBlockHeaders(args, callback) {
+        return new Promise((resolve, reject) => {
+            let url = this.fullUrl + `/blockheaders?api_key=${this.options.api_key}`;
+            if (args.fromBlockHash) {
+                url += `&fromBlockHash=${args.fromBlockHash}`;
+            }
+            if (args.fromHeight) {
+                url += `&fromHeight=${args.fromHeight}`;
+            }
+            if (args.order) {
+                url += `&order=${args.order}`;
+            }
+            if (args.limit) {
+                url += `&limit=${args.limit}`;
+            }
+            axios_1.default.get(url, {
                 headers: {}
             }).then((response) => {
                 this.callbackAndResolve(resolve, response.data, callback);
@@ -216,7 +244,7 @@ class APIClient {
                     message: 'blockhash required'
                 }, callback);
             }
-            axios_1.default.get(this.fullUrl + `/rawblock/${blockhash}`, {
+            axios_1.default.get(this.fullUrl + `/rawblock/${blockhash}?api_key=${this.options.api_key}`, {
                 headers: {}
             }).then((response) => {
                 this.callbackAndResolve(resolve, response.data, callback);
@@ -236,7 +264,7 @@ class APIClient {
                     message: 'blockhash required'
                 }, callback);
             }
-            axios_1.default.get(this.fullUrl + `/rawblock/${blockhash}`, {
+            axios_1.default.get(this.fullUrl + `/rawblock/${blockhash}?api_key=${this.options.api_key}`, {
                 headers: {}
             }).then((response) => {
                 this.callbackAndResolve(resolve, response.data, callback);
@@ -256,7 +284,7 @@ class APIClient {
                     message: 'height required'
                 }, callback);
             }
-            axios_1.default.get(this.fullUrl + `/block-index/${height}`, {
+            axios_1.default.get(this.fullUrl + `/block-index/${height}?api_key=${this.options.api_key}`, {
                 headers: {}
             }).then((response) => {
                 this.callbackAndResolve(resolve, response.data, callback);
@@ -341,7 +369,7 @@ class APIClient {
             addrs = address;
         }
         return new Promise((resolve, reject) => {
-            axios_1.default.get(this.fullUrl + `/addr/${address}/utxo`, {
+            axios_1.default.get(this.fullUrl + `/addr/${address}/utxo?api_key=${this.options.api_key}`, {
                 headers: {}
             }).then((response) => {
                 this.callbackAndResolve(resolve, response.data, callback);
@@ -370,7 +398,7 @@ class APIClient {
             addrs = address;
         }
         return new Promise((resolve, reject) => {
-            axios_1.default.get(this.fullUrl + `/addr/${address}?fromIndex=${fromIndex}&toIndex=${toIndex}`, {
+            axios_1.default.get(this.fullUrl + `/addr/${address}?api_key=${this.options.api_key}&fromIndex=${fromIndex}&toIndex=${toIndex}`, {
                 headers: {}
             }).then((response) => {
                 this.callbackAndResolve(resolve, response.data, callback);
@@ -409,7 +437,7 @@ class APIClient {
             });
         }
         return new Promise((resolve, reject) => {
-            axios_1.default.post(this.fullUrl + `/payments/addrs/tx/generate`, args, {
+            axios_1.default.post(this.fullUrl + `/payments/addrs/tx/generate?api_key=${this.options.api_key}`, args, {
                 headers: {}
             }).then((response) => {
                 this.callbackAndResolve(resolve, response.data, callback);
@@ -539,6 +567,50 @@ class APIClient {
             });
         });
     }
+    addresses_getUtxosWithOptions(args, callback) {
+        if (!this.isStringOrNonEmptyArray(args.addrs)) {
+            return new Promise((resolve, reject) => {
+                this.callbackAndResolve(resolve, {
+                    code: 422,
+                    message: 'address required'
+                }, callback);
+            });
+        }
+        let addrs = [];
+        if (!Array.isArray(args.addrs)) {
+            addrs.push(args.addrs);
+        }
+        else {
+            addrs = args.addrs;
+        }
+        let payload = {
+            addrs: Array.isArray(addrs) ? addrs.join(',') : addrs
+        };
+        if (args.offset) {
+            payload.offset = args.offset;
+        }
+        if (args.limit) {
+            payload.limit = args.limit;
+        }
+        if (args.afterHeight) {
+            payload.afterHeight = args.afterHeight;
+        }
+        if (args.sort) {
+            payload.sort = args.sort;
+        }
+        return new Promise((resolve, reject) => {
+            axios_1.default.post(this.fullUrl + `/addrs/utxo?api_key=${this.options.api_key}`, payload, {
+                headers: {}
+            }).then((response) => {
+                this.callbackAndResolve(resolve, response.data, callback);
+            }).catch((ex) => {
+                this.callbackAndResolve(resolve, {
+                    code: ex.response.status,
+                    message: ex.message ? ex.message : ex.toString()
+                }, callback);
+            });
+        });
+    }
     addresses_getUtxos(address, fromIndex = 0, toIndex = 20, callback) {
         if (!this.isStringOrNonEmptyArray(address)) {
             return new Promise((resolve, reject) => {
@@ -563,20 +635,6 @@ class APIClient {
         }
         if (toIndex) {
             payload.toIndex = toIndex;
-        }
-        if (addrs.length === 1) {
-            return new Promise((resolve, reject) => {
-                axios_1.default.get(this.fullUrl + `/addr/${addrs}/utxo`, {
-                    headers: {}
-                }).then((response) => {
-                    this.callbackAndResolve(resolve, response.data, callback);
-                }).catch((ex) => {
-                    this.callbackAndResolve(resolve, {
-                        code: ex.response.status,
-                        message: ex.message ? ex.message : ex.toString()
-                    }, callback);
-                });
-            });
         }
         return new Promise((resolve, reject) => {
             axios_1.default.post(this.fullUrl + `/addrs/utxo`, payload, {

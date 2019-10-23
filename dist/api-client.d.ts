@@ -33,6 +33,12 @@ export declare class APIClient {
     webhook_updateConfig(url: string, enabled: boolean, secret: string, callback?: Function): Promise<any>;
     blockheader(blockhash: string, callback?: Function): Promise<any>;
     block(blockhash: string, callback?: Function): Promise<any>;
+    getBlockHeaders(args: {
+        fromBlockHash?: string;
+        fromHeight?: number;
+        order?: string;
+        limit?: number;
+    }, callback?: Function): Promise<any>;
     rawblock(blockhash: string, callback?: Function): Promise<any>;
     blockhash(blockhash: string, callback?: Function): Promise<any>;
     blockindex(height: any, callback?: Function): Promise<any>;
@@ -66,6 +72,13 @@ export declare class APIClient {
     xpub_getTransactions(xpub: any, fromIndex?: number, toIndex?: number, callback?: Function): Promise<any>;
     xpub_getAddresses(xpub: any, fromIndex?: number, toIndex?: number, callback?: Function): Promise<any>;
     xpub_getUtxos(xpub: any, fromIndex?: number, toIndex?: number, callback?: Function): Promise<any>;
+    addresses_getUtxosWithOptions(args: {
+        addrs: any;
+        offset?: number;
+        limit?: number;
+        afterHeight?: number;
+        sort?: string;
+    }, callback?: Function): Promise<any>;
     addresses_getUtxos(address: any, fromIndex?: number, toIndex?: number, callback?: Function): Promise<any>;
     address_getSummary(address: any, callback?: Function): Promise<any>;
     address_getTxsOptions(address: any, options?: {

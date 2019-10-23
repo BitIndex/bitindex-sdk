@@ -3,11 +3,11 @@ var expect = require('chai').expect;
 var index = require('../dist/index.js');
 
 const options = {
-   api_url: 'http://localhost:3000',
-   //api_url: 'https://api.bitindex.network',
+   //api_url: 'http://localhost:3000',
+   api_url: 'https://api.bitindex.network',
 };
 
-describe('#getTransactions POST /addrs/txs test', () => {
+describe('#getAddressTransactions POST /addrs/txs test', () => {
 
     it('should succeed with default status', async () => {
         var result = await index.instance(options).address.getTransactions(
@@ -564,7 +564,6 @@ describe('#getTransactions POST /addrs/txs test', () => {
     });
 });
 
-
 describe('#getStatus GET /addr/:address test', () => {
 
     it('should fail with invalid address', async () => {
@@ -610,6 +609,67 @@ describe('#getUtxos (single address) GET /addr/:address/utxo test', () => {
             message: 'Request failed with status code 500'
         });
     });
+
+    it('should succeed with getting utxos with options', async () => {
+      var result = await index.instance(options).address.getUtxosWithOptions({
+         addrs: '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', afterHeight: 576167, sort: 'value:desc'
+      });
+      expect(result.length).to.eql(1);
+      delete result[0].confirmations;
+
+
+      expect(result).to.eql(
+          [
+              {
+                  address: '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
+                  txid: '5e3014372338f079f005eedc85359e4d96b8440e7dbeb8c35c4182e0c19a1a12',
+                  vout: 0,
+                  outputIndex: 0,
+                  amount: 0.00015399,
+                  satoshis: 15399,
+                  value: 15399,
+                  height: 576168,
+                  // confirmations: 1,
+                  "script": "76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac",
+                  scriptPubKey: '76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac'
+              }
+          ]
+      );
+      var result = await index.instance(options).address.getUtxosWithOptions({
+         addrs: ['12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD'], afterHeight: 576167, sort: 'value:desc'
+      });
+      delete result[0].confirmations;
+      delete result[1].confirmations;
+      expect(result).to.eql(
+          [
+              {
+                  "address": "1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD",
+                  "amount": 0.00015411,
+                  "height": 576171,
+                  "satoshis": 15411,
+                  "script": "76a91405cba91bd4ec7645df9a5c162877815f758c9b3888ac",
+                  "scriptPubKey": "76a91405cba91bd4ec7645df9a5c162877815f758c9b3888ac",
+                  "txid": "fcd2e37b0c9472fd81bc475e98193caa61581f3ded6c50e843d9c2e1ee5fdef6",
+                  "value": 15411,
+                  "vout": 0,
+                  outputIndex: 0,
+              },
+              {
+                  address: '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
+                  txid: '5e3014372338f079f005eedc85359e4d96b8440e7dbeb8c35c4182e0c19a1a12',
+                  vout: 0,
+                  outputIndex: 0,
+                  amount: 0.00015399,
+                  satoshis: 15399,
+                  value: 15399,
+                  height: 576168,
+                  // confirmations: 1,
+                  scriptPubKey: '76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac',
+                  script: '76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac'
+              }
+          ]
+      );
+   });
 
     it('should succeed with getting utxos', async () => {
         var result = await index.instance(options).address.getUtxos('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');

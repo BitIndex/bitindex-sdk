@@ -7,9 +7,16 @@ class AddressMethods {
             this.options = options;
         }
     }
-    getUtxos(addrs, callback, fromIndex = 0, toIndex = 20) {
+    getUtxos(addrs, callback) {
         const apiClient = new api_client_1.APIClient(this.options);
-        return apiClient.address_getUtxos(addrs, fromIndex, toIndex, callback);
+        // return apiClient.addresses_getUtxos(addrs, fromIndex, toIndex, callback);
+        return apiClient.addresses_getUtxosWithOptions({
+            addrs
+        }, callback);
+    }
+    getUtxosWithOptions(args, callback) {
+        const apiClient = new api_client_1.APIClient(this.options);
+        return apiClient.addresses_getUtxosWithOptions(args, callback);
     }
     getSummary(addr, callback) {
         const apiClient = new api_client_1.APIClient(this.options);
@@ -106,6 +113,10 @@ class BlockMethods {
     getBlockHashByIndex(index, callback) {
         const apiClient = new api_client_1.APIClient(this.options);
         return apiClient.blockindex(index, callback);
+    }
+    getBlockHeaders(args, callback) {
+        const apiClient = new api_client_1.APIClient(this.options);
+        return apiClient.getBlockHeaders(args, callback);
     }
 }
 class ChainInfoMethods {

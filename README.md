@@ -49,6 +49,7 @@ https://api.bitindex.network/api/v3/stn/tx/1a31edadbfa73702c0768ceace77ba6000cd9
 * [Operations](#operations)
     - [Address](#address)
         - [address.getUtxos](#addressgetUtxos)
+        - [address.getUtxosWithOptions](#addressgetUtxosWithOptions)
         - [address.getStatus](#addressgetStatus)
         - [address.getTransactions](#addressgetTransactions)
     - [Transaction](#transaction)
@@ -64,6 +65,7 @@ https://api.bitindex.network/api/v3/stn/tx/1a31edadbfa73702c0768ceace77ba6000cd9
         - [block.getByBlockHash](#blockgetByBlockHash)
         - [block.getByBlockHashRaw](#blockgetByBlockHashRaw)
         - [block.getBlockHashByIndex](#blockgetBlockHashByIndex)
+        - [block.getBlockHeaders](#blockgetBlockHeaders)
     - [Xpub](#xpub)
         - [xpub.getUtxos](#xpubgetUtxos)
         - [xpub.getAddresses](#xpubgetAddresses)
@@ -193,6 +195,40 @@ var result = await bitindex.address.getUtxos(['17d9np3mtaz13kYdePwc2Cufd6dMoNjWi
             value: 14656,
             height: 576025,
             confirmations: 144,
+            scriptPubKey: '76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac'
+        }
+    ]
+*/
+```
+
+#### address.getUtxosWithOptions
+
+Get unspent outputs with options to filter and sort.
+
+- offset
+- limit
+- afterHeight
+- sort ('confirmations:asc', 'confirmations:desc', 'value:desc', etc)
+
+```javascript
+var result = await bitindex.address.getUtxosWithOptions({
+    addrs: '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX', afterHeight: 576167, sort: 'value:desc'
+});
+// Or specify multiple addresses to retrieve Utxo's for all addresses...
+var result = await bitindex.address.getUtxosWithOptions({
+    addrs: ['17d9np3mtaz13kYdePwc2Cufd6dMoNjWib', '1XeMYaLJX6rhXcRe2XtGh6hgstgXwZ5SD'], afterHeight: 576167, sort: 'value:desc'
+});
+/*
+    [
+        {
+            address: '12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX',
+            txid: '5e3014372338f079f005eedc85359e4d96b8440e7dbeb8c35c4182e0c19a1a12',
+            vout: 0,
+            amount: 0.00015399,
+            satoshis: 15399,
+            value: 15399,
+            height: 576168,
+            confirmations: 1,
             scriptPubKey: '76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac'
         }
     ]
@@ -561,6 +597,45 @@ var result = await bitindex.block.getBlockHashByIndex('575870');
 }
 */
 ```
+
+#### block.getBlockHeaders
+
+Get blockheaders with options
+
+```javascript
+var result = bitindex.block.getBlockHeaders(
+{
+    fromHeight: -1, // Latest is -1. Or choose a specific height
+    fromBlockHash: '000000003031a0e73735690c5a1ff2a4be82553b2a12b776fbd3a215dc8f778d',
+    order: 'asc',
+    limit: 20,
+});
+/*
+[
+    {
+        "hash": "000000003031a0e73735690c5a1ff2a4be82553b2a12b776fbd3a215dc8f778d",
+        "confirmations": 606673,
+        "strippedsize": 0,
+        "size": 215,
+        "weight": 0,
+        "height": 6,
+        "version": 1,
+        "versionHex": "00000001",
+        "merkleroot": "20251a76e64e920e58291a30d4b212939aae976baca40e70818ceaa596fb9d37",
+        "time": 1231471789,
+        "nonce": 2538380312,
+        "bits": "1d00ffff",
+        "difficulty": 1,
+        "previousblockhash": "000000009b7262315dbf071787ad3656097b892abffd1f95a1a022f896f533fc",
+        "nextblockhash": "0000000071966c2b1d065fd446b1e485b2c9d9594acd2007ccbd5441cfc89444",
+        "txcnt": 1,
+        "coinbaseinfo": "BP//AB0BIw==",
+        "coinbasetxid": "20251a76e64e920e58291a30d4b212939aae976baca40e70818ceaa596fb9d37"
+    }
+]
+*/
+```
+
 
 ### Xpub
 

@@ -1,13 +1,14 @@
 {
   "name": "bitindex-sdk",
-  "version": "3.2.5",
+  "version": "3.3.1",
   "description": "MatterCloud BitIndex Javascript SDK - https://www.mattercloud.net",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && gulp build",
     "test": "mocha --reporter spec",
-    "test_single": "mocha --reporter spec --grep payments",
+    "test_address": "mocha --reporter spec --grep address",
+    "test_block": "mocha --reporter spec --grep block",
     "prepare": "npm run build"
   },
   "repository": {
@@ -28,6 +29,7 @@
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "browserify-shim": "^3.8.14",
+    "bsv": "^1.0.0",
     "chai": "^4.2.0",
     "gulp": "^3.9.1",
     "gulp-batch": "^1.0.5",
