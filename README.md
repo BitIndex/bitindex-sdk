@@ -1,23 +1,20 @@
 Note: BitIndex is now part of [MatterCloud](https://www.MatterCloud.net).
-# BitIndex Javascript SDK
+# [Deprecated - see below] BitIndex Javascript SDK
 https://www.bitindex.network
 
-BitIndex is a powerful Bitcoin SV blockchain API built for developers.
+# Replaced by MatterCloudJS
+Get it at: [https://github.com/mattercloud/mattercloudjs]
 
-*Insight-API Compatible*
 
 ![bitindex_header](bitindex_header.png)
 
-[View HTML API Documentation](https://www.bitindex.network/developers/api-documentation-v3.html)
+[View Old HTML API Documentation](https://www.bitindex.network/developers/api-documentation-v3.html)
 
 ---
 ## Quick Preview
 
 Easily query balances, utxos, and transactions.
 
-Mainnet:
-
-https://api.bitindex.network/api/v3/main/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX
 https://api.bitindex.network/api/v3/main/addr/12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX/utxo
 https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6
 
@@ -192,36 +189,6 @@ var result = await bitindex.address.getUtxosWithOptions({
             scriptPubKey: '76a91410bdcba3041b5e5517a58f2e405293c14a7c70c188ac'
         }
     ]
-*/
-```
-
-#### address.getStatus
-
-Get balances and transaction info
-
-```javascript
-var result = await bitindex.address.getStatus('12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX');
-
-/*
-{
-    "addrStr": "12XXBHkRNrBEb7GCvAP4G8oUs5SoDREkVX",
-    "balance": 0.00030055,
-    "balanceSat": 30055,
-    "totalReceived": 0.00060576,
-    "totalReceivedSat": 60576,
-    "totalSent": 0.00030521,
-    "totalSentSat": 30521,
-    "unconfirmedBalance": 0,
-    "unconfirmedBalanceSat": 0,
-    "unconfirmedTxApperances": 0,
-    "txApperances": 4,
-    "transactions": [
-        "5e3014372338f079f005eedc85359e4d96b8440e7dbeb8c35c4182e0c19a1a12",
-        "96b3dc5941ce97046d4af6e7a69f4b38c48f05ef071c2a33f88807b89ab51da6",
-        "d834682a5d29646427e5627d38c10224036535fa7e3066ae2f7a163a96550e27",
-        "bdf6f49776faaa4790af3e41b8b474a7d0d47df540f8d71c3579dc0addd64c45"
-    ]
-}
 */
 ```
 
