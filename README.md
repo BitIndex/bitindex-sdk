@@ -1,6 +1,5 @@
 Note: BitIndex is now part of [MatterCloud](https://www.MatterCloud.net).
 # [Deprecated - see below] BitIndex Javascript SDK
-https://www.bitindex.network
 
 # Replaced by MatterCloudJS
 Get it at: [https://github.com/mattercloud/mattercloudjs]
@@ -35,7 +34,6 @@ https://api.bitindex.network/api/v3/main/tx/96b3dc5941ce97046d4af6e7a69f4b38c48f
     - [Address](#address)
         - [address.getUtxos](#addressgetUtxos)
         - [address.getUtxosWithOptions](#addressgetUtxosWithOptions)
-        - [address.getStatus](#addressgetStatus)
         - [address.getTransactions](#addressgetTransactions)
     - [Transaction](#transaction)
         - [tx.get](#txget)
